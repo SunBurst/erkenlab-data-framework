@@ -1,0 +1,8 @@
+settings: {output_dir: 'd:/test/update/'}
+sites:
+  erken:
+    malma_island:
+      5 Min: {automatic_updating: true, file_path: 'C:/Users/Marcus/Desktop/data/Island
+          Hifreq (New Campbell).dat', line_num: 343}
+      1 Hour: {automatic_updating: true, file_path: 'C:/Users/Marcus/Desktop/data/Island
+          Hifreq (New Campbell).dat', line_num: 343}

@@ -1,0 +1,311 @@
+settings: {output_dir: 'd:/data/output/fileformatter/', time_zone: Etc/GMT-1}
+sites:
+  erken:
+    kristineholm:
+      files:
+        1_hour:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, HOUR_MINUTE, WATER_TEMP_1_AVG, DEPTH_CM_AVG,
+            DISCHARGE_AVG, WATER_TEMP_2_AVG, CT_AVG, C25USCM_1_AVG]
+          export_columns: [TMSTAMP, WATER_TEMP_1_AVG, DEPTH_CM_AVG, DISCHARGE_AVG,
+            WATER_TEMP_2_AVG, CT_AVG, C25USCM_1_AVG]
+          file_path: D:/data/output/erken/kristineholm/1 Hour.dat
+          name: 1 Hour
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY, HOUR_MINUTE]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, HOUR_MINUTE, WATER_TEMP_1_AVG, DEPTH_CM_AVG,
+            DISCHARGE_AVG, WATER_TEMP_2_AVG, CT_AVG, C25USCM_1_AVG]
+        24_hour:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, HOUR_MINUTE, WATER_TEMP_1_AVG, DEPTH_CM_AVG,
+            DISCHARGE_AVG, WATER_TEMP_2_AVG, CT_AVG, C25USCM_1_AVG]
+          export_columns: [TMSTAMP, WATER_TEMP_1_AVG, DEPTH_CM_AVG, DISCHARGE_AVG,
+            WATER_TEMP_2_AVG, CT_AVG, C25USCM_1_AVG]
+          file_path: D:/data/output/erken/kristineholm/24 Hour.dat
+          name: 24 Hour
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY, HOUR_MINUTE]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, HOUR_MINUTE, WATER_TEMP_1_AVG, DEPTH_CM_AVG,
+            DISCHARGE_AVG, WATER_TEMP_2_AVG, CT_AVG, C25USCM_1_AVG]
+        24_hour_diag:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, ProgramID, PowerLoss, PerRangeF, PerRangeT,
+            Battery_AVG, Battery_MAX, Battery_MIN, RefTemp_AVG, RefTemp_MAX, RefTemp_MIN,
+            DOffSet]
+          export_columns: [TMSTAMP, ProgramID, PowerLoss, PerRangeF, PerRangeT, Battery_AVG,
+            Battery_MAX, Battery_MIN, RefTemp_AVG, RefTemp_MAX, RefTemp_MIN, DOffSet]
+          file_path: D:/data/output/erken/kristineholm/24 Hour Diag.dat
+          name: 24 Hour Diag
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, ProgramID, PowerLoss, PerRangeF, PerRangeT,
+            Battery_AVG, Battery_MAX, Battery_MIN, RefTemp_AVG, RefTemp_MAX, RefTemp_MIN,
+            DOffSet]
+        5_min:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, HOUR_MINUTE, WATER_TEMP_1_AVG, DEPTH_CM_AVG,
+            DISCHARGE_AVG, WATER_TEMP_2_AVG, CT_AVG, C25USCM_1_AVG]
+          export_columns: [TMSTAMP, WATER_TEMP_1_AVG, DEPTH_CM_AVG, DISCHARGE_AVG,
+            WATER_TEMP_2_AVG, CT_AVG, C25USCM_1_AVG]
+          file_path: D:/data/output/erken/kristineholm/5 Min.dat
+          name: 5 Min
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY, HOUR_MINUTE]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, HOUR_MINUTE, WATER_TEMP_1_AVG, DEPTH_CM_AVG,
+            DISCHARGE_AVG, WATER_TEMP_2_AVG, CT_AVG, C25USCM_1_AVG]
+    malma_island:
+      files:
+        10_min_wind:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, HOUR_MINUTE, Wind_spd_AVG, Wind_dir_AVG]
+          export_columns: [TMSTAMP, Wind_spd_AVG, Wind_dir_AVG]
+          file_path: D:/data/output/erken/malma_island/10 Min Wind.dat
+          name: 10 Min Wind
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY, HOUR_MINUTE]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, HOUR_MINUTE, Wind_spd_AVG, Wind_dir_AVG]
+        1_hour:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, HOUR_MINUTE, Tot_rad_AVG, Day_min_AVG,
+            Air_temp2_AVG, Air_temp1_AVG, Humidity_AVG, Temp_1m_AVG, Temp_3m_AVG,
+            Temp_15m_AVG, Wind_spd_S_WVT, Wind_spd_U_WVT, Wind_dir_DU_WVT, Wind_dir_SDU_WVT,
+            Wind_spd3_AVG, Wat_level_AVG]
+          export_columns: [TMSTAMP, Tot_rad_AVG, Day_min_AVG, Air_temp2_AVG, Air_temp1_AVG,
+            Humidity_AVG, Temp_1m_AVG, Temp_3m_AVG, Temp_15m_AVG, Wind_spd_S_WVT,
+            Wind_spd_U_WVT, Wind_dir_DU_WVT, Wind_dir_SDU_WVT, Wind_spd3_AVG, Wat_level_AVG]
+          file_path: D:/data/output/erken/malma_island/1 Hour.dat
+          name: 1 Hour
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY, HOUR_MINUTE]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, HOUR_MINUTE, Tot_rad_AVG, Day_min_AVG, Air_temp2_AVG,
+            Air_temp1_AVG, Humidity_AVG, Temp_1m_AVG, Temp_3m_AVG, Temp_15m_AVG, Wind_spd_S_WVT,
+            Wind_spd_U_WVT, Wind_dir_DU_WVT, Wind_dir_SDU_WVT, Wind_spd3_AVG, Wat_level_AVG]
+        24_hour:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, Air_temp2_AVG, Air_temp1_MAX, Air_temp1_MIN,
+            Air_temp1_AVG, Humidity_AVG, Temp_1m_AVG, Temp_3m_AVG, Temp_15m_AVG, Tot_rad_AVG,
+            PAR_AVG, Tot_rad_MAX, Day_min_MAX, Cum_Total, PAR, Day_ln_hr, Wind_spd_S_WVT,
+            Wind_spd_U_WVT, Wind_dir_DU_WVT, Wind_dir_SDU_WVT, Wind_spd3_AVG, Wat_level_AVG,
+            Rain_min_TOT]
+          export_columns: [TMSTAMP, Air_temp2_AVG, Air_temp1_MAX, Air_temp1_MIN, Air_temp1_AVG,
+            Humidity_AVG, Temp_1m_AVG, Temp_3m_AVG, Temp_15m_AVG, Tot_rad_AVG, PAR_AVG,
+            Tot_rad_MAX, Day_min_MAX, Cum_Total, PAR, Day_ln_hr, Wind_spd_S_WVT, Wind_spd_U_WVT,
+            Wind_dir_DU_WVT, Wind_dir_SDU_WVT, Wind_spd3_AVG, Wat_level_AVG, Rain_min_TOT]
+          file_path: D:/data/output/erken/malma_island/24 Hour.dat
+          name: 24 Hour
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, Air_temp2_AVG, Air_temp1_MAX, Air_temp1_MIN,
+            Air_temp1_AVG, Humidity_AVG, Temp_1m_AVG, Temp_3m_AVG, Temp_15m_AVG, Tot_rad_AVG,
+            PAR_AVG, Tot_rad_MAX, Day_min_MAX, Cum_Total, PAR, Day_ln_hr, Wind_spd_S_WVT,
+            Wind_spd_U_WVT, Wind_dir_DU_WVT, Wind_dir_SDU_WVT, Wind_spd3_AVG, Wat_level_AVG,
+            Rain_min_TOT]
+        24_hour_diag:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, ProgramID, Battery_AVG]
+          export_columns: [TMSTAMP, ProgramID, Battery_AVG]
+          file_path: D:/data/output/erken/malma_island/24 Hour Diag.dat
+          name: 24 Hour Diag
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, ProgramID, Battery_AVG]
+        5_min:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, HOUR_MINUTE, Tot_rad_AVG, Day_min_AVG,
+            Air_temp2_AVG, Air_temp1_AVG, Humidity_AVG, Temp_1m_AVG, Temp_3m_AVG,
+            Temp_15m_AVG, Wind_spd_S_WVT, Wind_spd_U_WVT, Wind_dir_DU_WVT, Wind_dir_SDU_WVT,
+            Wind_spd3_AVG, Wat_level_AVG]
+          export_columns: [TMSTAMP, Tot_rad_AVG, Day_min_AVG, Air_temp2_AVG, Air_temp1_AVG,
+            Humidity_AVG, Temp_1m_AVG, Temp_3m_AVG, Temp_15m_AVG, Wind_spd_S_WVT,
+            Wind_spd_U_WVT, Wind_dir_DU_WVT, Wind_dir_SDU_WVT, Wind_spd3_AVG, Wat_level_AVG]
+          file_path: D:/data/output/erken/malma_island/5 Min.dat
+          name: 5 Min
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY, HOUR_MINUTE]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, HOUR_MINUTE, Tot_rad_AVG, Day_min_AVG, Air_temp2_AVG,
+            Air_temp1_AVG, Humidity_AVG, Temp_1m_AVG, Temp_3m_AVG, Temp_15m_AVG, Wind_spd_S_WVT,
+            Wind_spd_U_WVT, Wind_dir_DU_WVT, Wind_dir_SDU_WVT, Wind_spd3_AVG, Wat_level_AVG]
+    stensta:
+      files:
+        1_hour:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, HOUR_MINUTE, Ref_Temp_AVG, WTemp1_AVG,
+            Depth_cm_AVG, Discharge_AVG, Wtemp2_AVG, Ct_AVG, C25uScm_1_AVG, StillTemp_AVG]
+          export_columns: [TMSTAMP, Ref_Temp_AVG, WTemp1_AVG, Depth_cm_AVG, Discharge_AVG,
+            Wtemp2_AVG, Ct_AVG, C25uScm_1_AVG, StillTemp_AVG]
+          file_path: D:/data/output/erken/stensta/1 Hour.dat
+          name: 1 Hour
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY, HOUR_MINUTE]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, HOUR_MINUTE, Ref_Temp_AVG, WTemp1_AVG, Depth_cm_AVG,
+            Discharge_AVG, Wtemp2_AVG, Ct_AVG, C25uScm_1_AVG, StillTemp_AVG]
+        24_hour:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, HOUR_MINUTE, Ref_Temp_AVG, WTemp1_AVG,
+            Depth_cm_AVG, Discharge_AVG, Wtemp2_AVG, Ct_AVG, C25uScm_1_AVG, StillTemp_AVG]
+          export_columns: [TMSTAMP, Ref_Temp_AVG, WTemp1_AVG, Depth_cm_AVG, Discharge_AVG,
+            Wtemp2_AVG, Ct_AVG, C25uScm_1_AVG, StillTemp_AVG]
+          file_path: D:/data/output/erken/stensta/24 Hour.dat
+          name: 24 Hour
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, HOUR_MINUTE, Ref_Temp_AVG, WTemp1_AVG, Depth_cm_AVG,
+            Discharge_AVG, Wtemp2_AVG, Ct_AVG, C25uScm_1_AVG, StillTemp_AVG]
+        5_min:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, HOUR_MINUTE, Ref_Temp_AVG, WTemp1_AVG,
+            Depth_cm_AVG, Discharge_AVG, Wtemp2_AVG, Ct_AVG, C25uScm_1_AVG, StillTemp_AVG]
+          export_columns: [TMSTAMP, Ref_Temp_AVG, WTemp1_AVG, Depth_cm_AVG, Discharge_AVG,
+            Wtemp2_AVG, Ct_AVG, C25uScm_1_AVG, StillTemp_AVG]
+          file_path: D:/data/output/erken/stensta/5 Min.dat
+          name: 5 Min
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY, HOUR_MINUTE]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, HOUR_MINUTE, Ref_Temp_AVG, WTemp1_AVG, Depth_cm_AVG,
+            Discharge_AVG, Wtemp2_AVG, Ct_AVG, C25uScm_1_AVG, StillTemp_AVG]
+    temperature_float:
+      files:
+        10_min_wind:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, HOUR_MINUTE, Wind_spd]
+          export_columns: [TMSTAMP, Wind_spd]
+          file_path: D:/data/output/erken/temperature_float/10 Min Wind.dat
+          name: 10 Min Wind
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY, HOUR_MINUTE]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, HOUR_MINUTE, Wind_spd]
+        24_hour_diag:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, ProgramID, Battery_AVG]
+          export_columns: [TMSTAMP, ProgramID, Battery_AVG]
+          file_path: D:/data/output/erken/temperature_float/24 Hour Diag.dat
+          name: 24 Hour Diag
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, ProgramID, Battery_AVG]
+        30_min:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, HOUR_MINUTE, Ref_Temp_AVG, Water_Temp_0.5m,
+            Water_Temp_1m, Water_Temp_1.5m, Water_Temp_2m, Water_Temp_2.5m, Water_Temp_3m,
+            Water_Temp_3.5m, Water_Temp_4m, Water_Temp_4.5m, Water_Temp_5m, Water_Temp_5.5m,
+            Water_Temp_6m, Water_Temp_6.5m, Water_Temp_7m, Water_Temp_7.5m, Water_Temp_8m,
+            Water_Temp_8.5m, Water_Temp_9m, Water_Temp_9.5m, Water_Temp_10m, Water_Temp_10.5m,
+            Water_Temp_11m, Water_Temp_11.5m, Water_Temp_12m, Water_Temp_12.5m, Water_Temp_13m,
+            Water_Temp_13.5m, Water_Temp_14m, Water_Temp_14.5m, Water_Temp_15m]
+          export_columns: [TMSTAMP, Ref_Temp_AVG, Water_Temp_0.5m, Water_Temp_1m,
+            Water_Temp_1.5m, Water_Temp_2m, Water_Temp_2.5m, Water_Temp_3m, Water_Temp_3.5m,
+            Water_Temp_4m, Water_Temp_4.5m, Water_Temp_5m, Water_Temp_5.5m, Water_Temp_6m,
+            Water_Temp_6.5m, Water_Temp_7m, Water_Temp_7.5m, Water_Temp_8m, Water_Temp_8.5m,
+            Water_Temp_9m, Water_Temp_9.5m, Water_Temp_10m, Water_Temp_10.5m, Water_Temp_11m,
+            Water_Temp_11.5m, Water_Temp_12m, Water_Temp_12.5m, Water_Temp_13m, Water_Temp_13.5m,
+            Water_Temp_14m, Water_Temp_14.5m, Water_Temp_15m]
+          file_path: D:/data/output/erken/temperature_float/30 Min Water Temp.dat
+          name: 30 Min
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY, HOUR_MINUTE]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, HOUR_MINUTE, Ref_Temp_AVG, Water_Temp_0.5m,
+            Water_Temp_1m, Water_Temp_1.5m, Water_Temp_2m, Water_Temp_2.5m, Water_Temp_3m,
+            Water_Temp_3.5m, Water_Temp_4m, Water_Temp_4.5m, Water_Temp_5m, Water_Temp_5.5m,
+            Water_Temp_6m, Water_Temp_6.5m, Water_Temp_7m, Water_Temp_7.5m, Water_Temp_8m,
+            Water_Temp_8.5m, Water_Temp_9m, Water_Temp_9.5m, Water_Temp_10m, Water_Temp_10.5m,
+            Water_Temp_11m, Water_Temp_11.5m, Water_Temp_12m, Water_Temp_12.5m, Water_Temp_13m,
+            Water_Temp_13.5m, Water_Temp_14m, Water_Temp_14.5m, Water_Temp_15m]
+        5_min:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, HOUR_MINUTE, Ref_Temp_AVG, Water_Temp_0.5m,
+            Water_Temp_1m, Water_Temp_1.5m, Water_Temp_2m, Water_Temp_2.5m, Water_Temp_3m,
+            Water_Temp_3.5m, Water_Temp_4m, Water_Temp_4.5m, Water_Temp_5m, Water_Temp_5.5m,
+            Water_Temp_6m, Water_Temp_6.5m, Water_Temp_7m, Water_Temp_7.5m, Water_Temp_8m,
+            Water_Temp_8.5m, Water_Temp_9m, Water_Temp_9.5m, Water_Temp_10m, Water_Temp_10.5m,
+            Water_Temp_11m, Water_Temp_11.5m, Water_Temp_12m, Water_Temp_12.5m, Water_Temp_13m,
+            Water_Temp_13.5m, Water_Temp_14m, Water_Temp_14.5m, Water_Temp_15m]
+          export_columns: [TMSTAMP, Ref_Temp_AVG, Water_Temp_0.5m, Water_Temp_1m,
+            Water_Temp_1.5m, Water_Temp_2m, Water_Temp_2.5m, Water_Temp_3m, Water_Temp_3.5m,
+            Water_Temp_4m, Water_Temp_4.5m, Water_Temp_5m, Water_Temp_5.5m, Water_Temp_6m,
+            Water_Temp_6.5m, Water_Temp_7m, Water_Temp_7.5m, Water_Temp_8m, Water_Temp_8.5m,
+            Water_Temp_9m, Water_Temp_9.5m, Water_Temp_10m, Water_Temp_10.5m, Water_Temp_11m,
+            Water_Temp_11.5m, Water_Temp_12m, Water_Temp_12.5m, Water_Temp_13m, Water_Temp_13.5m,
+            Water_Temp_14m, Water_Temp_14.5m, Water_Temp_15m]
+          file_path: D:/data/output/erken/temperature_float/5 Min.dat
+          name: 5 Min
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY, HOUR_MINUTE]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, HOUR_MINUTE, Ref_Temp_AVG, Water_Temp_0.5m,
+            Water_Temp_1m, Water_Temp_1.5m, Water_Temp_2m, Water_Temp_2.5m, Water_Temp_3m,
+            Water_Temp_3.5m, Water_Temp_4m, Water_Temp_4.5m, Water_Temp_5m, Water_Temp_5.5m,
+            Water_Temp_6m, Water_Temp_6.5m, Water_Temp_7m, Water_Temp_7.5m, Water_Temp_8m,
+            Water_Temp_8.5m, Water_Temp_9m, Water_Temp_9.5m, Water_Temp_10m, Water_Temp_10.5m,
+            Water_Temp_11m, Water_Temp_11.5m, Water_Temp_12m, Water_Temp_12.5m, Water_Temp_13m,
+            Water_Temp_13.5m, Water_Temp_14m, Water_Temp_14.5m, Water_Temp_15m]
+  malaren:
+    galten:
+      files:
+        10_min_wind:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, HOUR_MINUTE, Wind_spd_AVG, Wind_dir_AVG]
+          export_columns: [TMSTAMP, Wind_spd_AVG, Wind_dir_AVG]
+          file_path: D:/data/output/malaren/galten/10 Min Wind.dat
+          name: 10 Min Wind
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY, HOUR_MINUTE]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, HOUR_MINUTE, Wind_spd_AVG, Wind_dir_AVG]
+        1_hour:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, HOUR_MINUTE, Tot_rad_AVG, Air_temp2_AVG,
+            Air_Temp1, Humidity_AVG, Wind_spd_S_WVT, Wind_spd_U_WVT, Wind_dir_DU_WVT,
+            Wind_dir_SDU_WVT, Wind_spd3_AVG, BadTemp_AVG, PAR_AVG, Air_Pres_AVG]
+          export_columns: [TMSTAMP, Tot_rad_AVG, Air_temp2_AVG, Air_Temp1, Humidity_AVG,
+            Wind_spd_S_WVT, Wind_spd_U_WVT, Wind_dir_DU_WVT, Wind_dir_SDU_WVT, Wind_spd3_AVG,
+            BadTemp_AVG, PAR_AVG, Air_Pres_AVG]
+          file_path: D:/data/output/malaren/galten/1 Hour.dat
+          name: 1 Hour
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY, HOUR_MINUTE]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, HOUR_MINUTE, Tot_rad_AVG, Air_temp2_AVG,
+            Air_Temp1, Humidity_AVG, Wind_spd_S_WVT, Wind_spd_U_WVT, Wind_dir_DU_WVT,
+            Wind_dir_SDU_WVT, Wind_spd3_AVG, BadTemp_AVG, PAR_AVG, Air_Pres_AVG]
+        24_hour:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, Air_Temp2_AVG, Air_Temp1_MAX, Air_Temp1_MIN,
+            Air_Temp1_AVG, Humidity_AVG, Tot_rad_AVG, Tot_rad_MAX, Cum_Total, Day_ln_hr,
+            Wind_spd_S_WVT, Wind_spd_U_WVT, Wind_dir_DU_WVT, Wind_dir_SDU_WVT, Wind_spd3_AVG,
+            BadTemp_AVG, PAR_AVG, PAR_MAX, Cum_PAR, Air_Pres_AVG]
+          export_columns: [TMSTAMP, Air_Temp2_AVG, Air_Temp1_MAX, Air_Temp1_MIN, Air_Temp1_AVG,
+            Humidity_AVG, Tot_rad_AVG, Tot_rad_MAX, Cum_Total, Day_ln_hr, Wind_spd_S_WVT,
+            Wind_spd_U_WVT, Wind_dir_DU_WVT, Wind_dir_SDU_WVT, Wind_spd3_AVG, BadTemp_AVG,
+            PAR_AVG, PAR_MAX, Cum_PAR, Air_Pres_AVG]
+          file_path: D:/data/output/malaren/galten/24 Hour.dat
+          name: 24 Hour
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, Air_Temp2_AVG, Air_Temp1_MAX, Air_Temp1_MIN,
+            Air_Temp1_AVG, Humidity_AVG, Tot_rad_AVG, Tot_rad_MAX, Cum_Total, Day_ln_hr,
+            Wind_spd_S_WVT, Wind_spd_U_WVT, Wind_dir_DU_WVT, Wind_dir_SDU_WVT, Wind_spd3_AVG,
+            BadTemp_AVG, PAR_AVG, PAR_MAX, Cum_PAR, Air_Pres_AVG]
+        24_hour_diag:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, Prog_Id, Bat_volt_AVG, Bat_volt_MAX,
+            Bat_volt_MIN, Ref_temp_AVG, Ref_temp_MAX, Ref_temp_MIN, PowerLoss]
+          export_columns: [TMSTAMP, Prog_Id, Bat_volt_AVG, Bat_volt_MAX, Bat_volt_MIN,
+            Ref_temp_AVG, Ref_temp_MAX, Ref_temp_MIN, PowerLoss]
+          file_path: D:/data/output/malaren/galten/24 Hour Diag.dat
+          name: 24 Hour Diag
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, Prog_Id, Bat_volt_AVG, Bat_volt_MAX, Bat_volt_MIN,
+            Ref_temp_AVG, Ref_temp_MAX, Ref_temp_MIN, PowerLoss]
+        5_min:
+          columns: [ARRAY_ID, YEAR, JULIANDAY, HOUR_MINUTE, Tot_rad_AVG, Air_temp2_AVG,
+            Air_Temp1, Humidity_AVG, Wind_spd_S_WVT, Wind_spd_U_WVT, Wind_dir_DU_WVT,
+            Wind_dir_SDU_WVT, Wind_spd3_AVG, BadTemp_AVG, PAR_AVG, Air_Pres_AVG]
+          export_columns: [TMSTAMP, Tot_rad_AVG, Air_temp2_AVG, Air_Temp1, Humidity_AVG,
+            Wind_spd_S_WVT, Wind_spd_U_WVT, Wind_dir_DU_WVT, Wind_dir_SDU_WVT, Wind_spd3_AVG,
+            BadTemp_AVG, PAR_AVG, Air_Pres_AVG]
+          file_path: D:/data/output/malaren/galten/5 Min.dat
+          name: 5 Min
+          skip_rows: 0
+          time_columns: [YEAR, JULIANDAY, HOUR_MINUTE]
+          time_parsed_column: TMSTAMP
+          use_columns: [YEAR, JULIANDAY, HOUR_MINUTE, Tot_rad_AVG, Air_temp2_AVG,
+            Air_Temp1, Humidity_AVG, Wind_spd_S_WVT, Wind_spd_U_WVT, Wind_dir_DU_WVT,
+            Wind_dir_SDU_WVT, Wind_spd3_AVG, BadTemp_AVG, PAR_AVG, Air_Pres_AVG]
