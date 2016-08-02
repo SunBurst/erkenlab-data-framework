@@ -1,7 +1,0 @@
-settings:
-  ftp-address: ftp.masinotek.com
-  username: uppsala
-  password: welcaksArn
-
-logging:
-  debuglevel: 1
