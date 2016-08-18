@@ -126,10 +126,9 @@ def process_file(cfg, output_dir, site, location, file, file_data, time_zone):
     use_columns = file_data.get('use_columns')
     file_ext = os.path.splitext(os.path.abspath(file_path))[1]	# Get file extension, e.g. '.dat', '.csv' etc.
     print("Processing file: {0}, {1}".format(file, file_path))
-    df = pandas.read_csv(file_path, skiprows=skip_rows, names=data_columns, usecols=use_columns, parse_dates={'TMSTAMP': time_columns},
-                         date_parser=parse)
+    df = pandas.read_csv(file_path, skiprows=skip_rows, names=data_columns, usecols=use_columns,
+                         parse_dates={'TMSTAMP': time_columns}, date_parser=parse)
 
-    print(file_name, file_ext)
     fixed_file = os.path.join(
         os.path.abspath(output_dir), site, location,
         file_name + file_ext)	# Construct absolute file path to subfile.
@@ -146,6 +145,7 @@ def process_file(cfg, output_dir, site, location, file, file_data, time_zone):
     num_of_processed_rows = len(df)
 
     cfg['sites'][site][location]['files'][file]['skip_rows'] = skip_rows + num_of_processed_rows
+
 
 def process_files(args):
     cfg = utils.load_config(CONFIG_PATH)
