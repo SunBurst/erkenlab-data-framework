@@ -16,6 +16,7 @@ from loggerparser import utils
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 CONFIG_PATH = os.path.join(BASE_DIR, 'cfg/fileformatter.yaml')
 
+
 class RawDataTimeManager(object):
     """Class for converting raw data time formats to timestamp. """
 
@@ -29,7 +30,7 @@ class RawDataTimeManager(object):
     def parse_custom_format(self, *args):
         pass
 
-    def parse_time(self, *args):
+    def parse_time(self, *args, to_utc):
         """Converts the given raw data time format to a datetime object (local time zone -> UTC).
         Args:
             args:
@@ -39,9 +40,12 @@ class RawDataTimeManager(object):
         t = time.strptime(time_str, time_fmt)
         dt = datetime.fromtimestamp(time.mktime(t))
         loc_dt = self.tz.localize(dt)
-        #utc_dt = loc_dt.astimezone(pytz.utc)
+        parsed_dt = loc_dt
+        if to_utc:
+            utc_dt = loc_dt.astimezone(pytz.utc)
+            parsed_dt = utc_dt
 
-        return loc_dt
+        return parsed_dt
 
 class CampbellLegacy(RawDataTimeManager):
 
@@ -108,12 +112,12 @@ class CampbellLegacy(RawDataTimeManager):
         return (parsed_fmt, parsed_time)
 
 
-def process_file(cfg, output_dir, site, location, file, file_data, time_zone):
+def process_file(cfg, output_dir, site, location, file, file_data, to_utc, time_zone):
 
     def parse(time_string):
         raw_tm = CampbellLegacy(time_zone)
         time_args = time_string.split(' ')
-        dt = raw_tm.parse_time(*time_args)
+        dt = raw_tm.parse_time(*time_args, to_utc=to_utc)
 
         return dt
 
@@ -139,7 +143,7 @@ def process_file(cfg, output_dir, site, location, file, file_data, time_zone):
     else:
         header = export_columns
 
-    df.to_csv(fixed_file, mode='a', columns=export_columns, header=header, date_format="%Y-%m-%d %H:%M:%S",
+    df.to_csv(fixed_file, mode='a', columns=export_columns, header=header, date_format="%Y-%m-%d %H:%M:%S%z",
               float_format='%.3f', index=False)
 
     num_of_processed_rows = len(df)
@@ -160,22 +164,22 @@ def process_files(args):
             files = location_data.get('files')
             if args.file:
                 file_data = files.get(args.file)
-                process_file(cfg, output_dir, args.site, args.location, args.file, file_data, time_zone)
+                process_file(cfg, output_dir, args.site, args.location, args.file, file_data, args.toutc, time_zone)
             else:
                 for f, file_data in files.items():
-                    process_file(cfg, output_dir, args.site, args.location, f, file_data, time_zone)
+                    process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
         else:
             for l, location_data in site_data.items():
                 files = location_data.get('files')
                 for f, file_data in files.items():
-                    process_file(cfg, output_dir, args.site, args.location, f, file_data, time_zone)
+                    process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
     else:
         for s, site_data in sites.items():
             for l, location_data in site_data.items():
                 files = location_data.get('files')
                 for f, file_data in files.items():
                     print(f, file_data)
-                    process_file(cfg, output_dir, args.site, args.location, f, file_data, time_zone)
+                    process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
 
     utils.save_config(CONFIG_PATH, cfg)
 
@@ -192,6 +196,8 @@ def setup_parser():
                         dest='location', help='Specific location to manage.')
     parser.add_argument('-f', '--file', action='store', required=False,
                         dest='file', help='Specific file to manage.')
+    parser.add_argument('-u', '--toutc', help='Convert time to UTC.', dest='toutc', action='store_true',
+                        default=False)
 
     args = parser.parse_args()
 

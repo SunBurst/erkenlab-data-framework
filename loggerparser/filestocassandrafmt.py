@@ -26,7 +26,7 @@ def process_file(cfg, output_dir, site, location, file, file_data, time_zone):
     file_ext = os.path.splitext(os.path.abspath(file_path))[1]	# Get file extension, e.g. '.dat', '.csv' etc.
     print("Processing file: {0}, {1}".format(file, file_path))
 
-    df = pandas.read_csv(file_path, skiprows=skip_rows, index_col=[time_column], header=header_row, parse_dates=True)
+    df = pandas.read_csv(file_path, skiprows=range(1, skip_rows), parse_dates=['TMSTAMP'])
     df.index = df.index.tz_localize(tz=time_zone).tz_convert(tz=pytz.UTC)
     num_of_processed_rows = len(df)
 
