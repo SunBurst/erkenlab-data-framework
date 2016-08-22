@@ -128,10 +128,12 @@ def process_file(cfg, output_dir, site, location, file, file_data, to_utc, time_
     data_columns = file_data.get('columns')
     export_columns = file_data.get('export_columns')
     use_columns = file_data.get('use_columns')
+    time_parsed_column = file_data.get('time_parsed_column')
     file_ext = os.path.splitext(os.path.abspath(file_path))[1]	# Get file extension, e.g. '.dat', '.csv' etc.
     print("Processing file: {0}, {1}".format(file, file_path))
+
     df = pandas.read_csv(file_path, skiprows=skip_rows, names=data_columns, usecols=use_columns,
-                         parse_dates={'TMSTAMP': time_columns}, date_parser=parse)
+                         parse_dates={time_parsed_column: time_columns}, date_parser=parse)
 
     fixed_file = os.path.join(
         os.path.abspath(output_dir), site, location,
