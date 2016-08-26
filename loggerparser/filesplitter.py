@@ -11,6 +11,7 @@ from loggerparser import utils
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 CONFIG_PATH = os.path.join(BASE_DIR, 'cfg/filesplitter.yaml')
 
+
 def identify_array_id(row):
     """Identifies the array id of the given row.
 
@@ -23,7 +24,7 @@ def identify_array_id(row):
     return row[0]
 
 
-def to_subfiles(file, output_dir, site=None, location=None, array_ids=None, line_num=0):
+def to_subfiles(file, output_dir, split_by_year, site=None, location=None, array_ids=None, line_num=0):
     """Split csv file into subfiles based on its first element.
 
     Args:
@@ -32,6 +33,7 @@ def to_subfiles(file, output_dir, site=None, location=None, array_ids=None, line
         array_ids (dict): Array ID:s lookup table for translating codes to plain text.
         file (string): Source file's absolute path.
         line_num (int): File line number, used for tracking.
+        split_by_year (bool): Split into subfolders by year.
 
     Returns:
         The number of lines processed.
@@ -102,7 +104,7 @@ def to_subfiles(file, output_dir, site=None, location=None, array_ids=None, line
     return num_of_new_rows
 
 
-def run_file(file_input, file_output):
+def run_file(file_input, file_output, split_by_year):
     """Process single file.
 
     Args:
@@ -110,7 +112,7 @@ def run_file(file_input, file_output):
         file_output (string): Path to output directory.
 
     """
-    to_subfiles(file_input, file_output)
+    to_subfiles(file_input, file_output, split_by_year)
 
 
 def update_location(cfg, output_dir, site, location, location_data):
@@ -129,7 +131,8 @@ def update_location(cfg, output_dir, site, location, location_data):
     line_num = location_data.get('line_num')
     array_ids = location_data.get('array_ids')
     file_path = location_data.get('file_path')
-    num_of_new_rows = to_subfiles(file_path, output_dir, site, location, array_ids, line_num)
+    split_by_year = location_data.get('split_by_year')
+    num_of_new_rows = to_subfiles(file_path, output_dir, split_by_year, site, location, array_ids, line_num)
     cfg['sites'][site][location]['line_num'] = line_num + num_of_new_rows
 
 
@@ -180,6 +183,8 @@ def edit_cfg_file(parameters, replacements, old_values=None):
         cfg['sites'][parameters.get('site')][parameters.get('location')]['automatic_updating'] = replacements.get('auto_updating')
     if 'file_path' in replacements:
         cfg['sites'][parameters.get('site')][parameters.get('location')]['file_path'] = replacements.get('file_path')
+    if 'split_by_year' in replacements:
+        cfg['sites'][parameters.get('site')][parameters.get('location')]['split_by_year'] = replacements.get('split_by_year')
     if 'line_num' in replacements:
         cfg['sites'][parameters.get('site')][parameters.get('location')]['line_num'] = replacements.get('line_num')
     if 'location' in replacements:
@@ -208,7 +213,7 @@ def process_args(args):
                     utils.clean_dir(args.clean, CONFIG_PATH)
             elif args.mode_parser_name == 'run':
                 if args.site:
-                    info = {'site' : args.site}
+                    info = {'site' : args.site, 'split_by_year' : args.split_by_year}
                     if args.location:
                         info['location'] = args.location
                     run_system(**info)
@@ -232,4 +237,4 @@ def process_args(args):
                     edit_cfg_file(parameters, {'auto_updating' : False})
 
         elif args.top_parser_name == 'file':
-            run_file(args.input, args.output)
+            run_file(args.input, args.output, args.split_by_year)
