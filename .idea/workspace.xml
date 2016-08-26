@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f875a4f9-7fbd-4379-9937-d4d8cbc2f3cd" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loggerparser/fileformatter.py" afterPath="$PROJECT_DIR$/loggerparser/fileformatter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loggerparser/filesplitter.py" afterPath="$PROJECT_DIR$/loggerparser/filesplitter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loggerparser/main.py" afterPath="$PROJECT_DIR$/loggerparser/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loggerparser/loggercollector.py" afterPath="$PROJECT_DIR$/loggerparser/loggercollector.py" />
     </list>
     <ignored path="loggerparser.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,11 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="loggercollector.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="loggercollector.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/loggerparser/loggercollector.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.58816963">
+              <caret line="70" column="37" selection-start-line="70" selection-start-column="37" selection-end-line="70" selection-end-column="37" />
               <folding>
                 <element signature="e#15#25#0" expanded="true" />
               </folding>
@@ -62,11 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="loggers.yaml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="loggers.yaml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cfg/loggers.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.28299645">
-              <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+            <state vertical-scroll-proportion="-1.2363636">
+              <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -76,7 +73,7 @@
         <entry file="file://$PROJECT_DIR$/loggerparser/fileformatter.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="147" column="13" selection-start-line="147" selection-start-column="7" selection-end-line="147" selection-end-column="13" />
+              <caret line="148" column="13" selection-start-line="148" selection-start-column="7" selection-end-line="148" selection-end-column="13" />
               <folding>
                 <element signature="e#15#25#0" expanded="true" />
               </folding>
@@ -842,17 +839,7 @@
     <entry file="file://$PROJECT_DIR$/loggerparser/fileformatter.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="147" column="13" selection-start-line="147" selection-start-column="7" selection-end-line="147" selection-end-column="13" />
-          <folding>
-            <element signature="e#15#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/loggerparser/loggercollector.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+          <caret line="148" column="13" selection-start-line="148" selection-start-column="7" selection-end-line="148" selection-end-column="13" />
           <folding>
             <element signature="e#15#25#0" expanded="true" />
           </folding>
@@ -861,9 +848,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cfg/loggers.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28299645">
-          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+        <state vertical-scroll-proportion="-1.2363636">
+          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loggerparser/loggercollector.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.58816963">
+          <caret line="70" column="37" selection-start-line="70" selection-start-column="37" selection-end-line="70" selection-end-column="37" />
+          <folding>
+            <element signature="e#15#25#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

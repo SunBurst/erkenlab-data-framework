@@ -68,7 +68,7 @@ def process_files(args):
         site_data = sites.get(args.site)
         locations = site_data.get('locations')
         if args.location:
-            location_data = site_data.get(args.location)
+            location_data = locations.get(args.location)
             process_file(cfg, output_dir, args.site, args.location, location_data)
 
         else:
