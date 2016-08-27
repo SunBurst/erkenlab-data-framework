@@ -23,7 +23,7 @@ def process_file(cfg, output_dir, site, location, location_data):
     host_address = location_data.get('host')
     port = location_data.get('port')
     logs = location_data.get('logs')
-
+    print("device")
     device = CR1000.from_url('{0}:{1}:{2}'.format(connection_type, host_address, port))
     device_tables = device.list_tables()
 
