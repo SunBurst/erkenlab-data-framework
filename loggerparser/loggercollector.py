@@ -52,13 +52,13 @@ def process_file(cfg, output_dir, site, location, location_data):
             data = device.get_data(log_name, start_time, stop_time)
 
             target_file = os.path.join(
-                os.path.abspath(output_dir), site, location, log_name + '.csv')	# Construct absolute file path.
+                os.path.abspath(output_dir), site, location, log_name + '.dat')	# Construct absolute file path.
             os.makedirs(os.path.dirname(target_file), exist_ok=True)    # Create file if it doesn't already exists.
 
             with open(target_file, mode='a') as f:
                 f.write("%s" % data.to_csv())
 
-            conf['sites'][site]['locations'][location]['logs'][log_name]['start'] = start_time
+            conf['sites'][site]['locations'][location]['logs'][log_name]['start'] = stop_time
 
     return conf
 

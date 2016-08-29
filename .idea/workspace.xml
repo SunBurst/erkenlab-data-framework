@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f875a4f9-7fbd-4379-9937-d4d8cbc2f3cd" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loggerparser/loggercollector.py" afterPath="$PROJECT_DIR$/loggerparser/loggercollector.py" />
     </list>
     <ignored path="loggerparser.iws" />
@@ -39,8 +38,8 @@
       <file leaf-file-name="loggercollector.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/loggerparser/loggercollector.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.1137124">
-              <caret line="62" column="15" selection-start-line="62" selection-start-column="15" selection-end-line="62" selection-end-column="15" />
+            <state vertical-scroll-proportion="0.5641026">
+              <caret line="54" column="77" selection-start-line="54" selection-start-column="77" selection-end-line="54" selection-end-column="77" />
               <folding>
                 <element signature="e#15#25#0" expanded="true" />
               </folding>
@@ -857,8 +856,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/loggerparser/loggercollector.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.1137124">
-          <caret line="62" column="15" selection-start-line="62" selection-start-column="15" selection-end-line="62" selection-end-column="15" />
+        <state vertical-scroll-proportion="0.5641026">
+          <caret line="54" column="77" selection-start-line="54" selection-start-column="77" selection-end-line="54" selection-end-column="77" />
           <folding>
             <element signature="e#15#25#0" expanded="true" />
           </folding>
