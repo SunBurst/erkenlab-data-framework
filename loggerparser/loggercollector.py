@@ -50,12 +50,15 @@ def process_file(cfg, output_dir, site, location, location_data):
             to_utc = log_data.get('to_utc')
             parameters = log_data.get('parameters')
 
-            data = device.get_data_generator(log_name, start_time, stop_time)
+            data = device.get_data(log_name, start_time, stop_time)
 
             target_file = os.path.join(
-                os.path.abspath(output_dir), site, location, log_name + '.dat')	# Construct absolute file path.
+                os.path.abspath(output_dir), site, location, log_name + '.dat')     # Construct absolute file path.
 
             os.makedirs(os.path.dirname(target_file), exist_ok=True)    # Create file if it doesn't already exists.
+
+            with open(target_file, 'a') as temp_f:
+                pass
 
             with open(target_file, 'r') as file_db:
                 db = csv_to_dict(file_db, delimiter=',')
@@ -68,9 +71,8 @@ def process_file(cfg, output_dir, site, location, location_data):
 
                 total_records = 0
 
-                for i, records in enumerate(data):
-                    total_records += len(records)
-                    print("Packet %d with %d records" % (i, len(records)))
+                for row in data:
+                    total_records += len(row)
                     f.write("%s" % data.to_csv(delimiter=',', header=header))
 
                     if header:
