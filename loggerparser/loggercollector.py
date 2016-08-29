@@ -50,7 +50,7 @@ def process_file(cfg, output_dir, site, location, location_data):
             to_utc = log_data.get('to_utc')
             parameters = log_data.get('parameters')
 
-            data = device.get_data(log_name, start_time, stop_time)
+            data = device.get_data_generator(log_name, start_time, stop_time)
 
             target_file = os.path.join(
                 os.path.abspath(output_dir), site, location, log_name + '.dat')	# Construct absolute file path.
