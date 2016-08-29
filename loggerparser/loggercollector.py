@@ -17,51 +17,50 @@ CONFIG_PATH = os.path.join(BASE_DIR, 'cfg/loggers.yaml')
 
 
 def process_file(cfg, output_dir, site, location, location_data):
+    conf = cfg
     logger_type = location_data.get('logger')
     time_format = location_data.get('time_format')
     connection_type = location_data.get('connection')
     host_address = location_data.get('host')
     port = location_data.get('port')
     logs = location_data.get('logs')
-<<<<<<< HEAD
-    print("device")
-=======
-    
->>>>>>> 45c97d73f3a3bb19b8d1eb1860bd88ea699ff777
+
     device = CR1000.from_url('{0}:{1}:{2}'.format(connection_type, host_address, port))
     device_tables = device.list_tables()
 
+    device_tables_encoded = [i.decode('ascii') for i in device_tables if isinstance(i, bytes)]
+
+    if device_tables_encoded:
+        device_tables = device_tables_encoded
+
     for log_name, log_data in logs.items():
-        if log_name.encode('ascii') in device_tables:
+        if log_name in device_tables:
             print(log_name)
             time_zone = log_data.get('time_zone')
             pytz_tz = pytz.timezone(time_zone)
             start_time = log_data.get('start')
-            stop_time = log_data.get('stop')
 
             if start_time:
                 start_time = datetime.strptime(start_time, time_format)
-                start_time = pytz_tz.localize(start_time)
             else:
-                start_time = datetime.fromtimestamp(0, pytz_tz)
-            if stop_time:
-                stop_time = datetime.strptime(stop_time, time_format)
-                stop_time = pytz_tz.localize(stop_time)
-            else:
-                stop_time = datetime.now(pytz_tz)
+                start_time = datetime.fromtimestamp(0)
 
+            stop_time = device.gettime()
             to_utc = log_data.get('to_utc')
             parameters = log_data.get('parameters')
 
             data = device.get_data(log_name, start_time, stop_time)
 
             target_file = os.path.join(
-                os.path.abspath(output_dir), site, location,
-                    log_name + '.csv')	# Construct absolute file path to subfile.
+                os.path.abspath(output_dir), site, location, log_name + '.csv')	# Construct absolute file path.
             os.makedirs(os.path.dirname(target_file), exist_ok=True)    # Create file if it doesn't already exists.
 
             with open(target_file, mode='a') as f:
                 f.write("%s" % data.to_csv())
+
+            conf['sites'][site]['locations'][location]['logs'][log_name]['start'] = start_time
+
+    return conf
 
 
 def process_files(args):
