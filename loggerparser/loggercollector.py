@@ -9,6 +9,7 @@ import pytz
 from datetime import datetime
 
 from pycampbellcr1000 import CR1000
+from pycampbellcr1000.utils import csv_to_dict
 
 from loggerparser import utils
 
@@ -53,10 +54,35 @@ def process_file(cfg, output_dir, site, location, location_data):
 
             target_file = os.path.join(
                 os.path.abspath(output_dir), site, location, log_name + '.dat')	# Construct absolute file path.
+
             os.makedirs(os.path.dirname(target_file), exist_ok=True)    # Create file if it doesn't already exists.
 
+            with open(target_file, 'r') as file_db:
+                db = csv_to_dict(file_db, delimiter=',')
+
             with open(target_file, mode='a') as f:
-                f.write("%s" % data.to_csv())
+                if len(db) > 0:
+                    header = False
+                else:
+                    header = True
+
+                total_records = 0
+
+                for i, records in enumerate(data):
+                    total_records += len(records)
+                    print("Packet %d with %d records" % (i, len(records)))
+                    f.write("%s" % data.to_csv(delimiter=',', header=header))
+
+                    if header:
+                        header = False
+
+                print("---------------------------")
+                if total_records == 0:
+                    print("No new records were found﻿")
+                elif total_records == 1:
+                    print("1 new record was found")
+                else:
+                    print("%d new records were found" % total_records)
 
             conf['sites'][site]['locations'][location]['logs'][log_name]['start'] = stop_time
 
@@ -73,17 +99,17 @@ def process_files(args):
         locations = site_data.get('locations')
         if args.location:
             location_data = locations.get(args.location)
-            process_file(cfg, output_dir, args.site, args.location, location_data)
+            cfg = process_file(cfg, output_dir, args.site, args.location, location_data)
 
         else:
             for l, location_data in locations.items():
-                process_file(cfg, output_dir, args.site, l, location_data)
+                cfg = process_file(cfg, output_dir, args.site, l, location_data)
 
     else:
         for s, site_data in sites.items():
             locations = site_data.get('locations')
             for l, location_data in locations.items():
-                process_file(cfg, output_dir, s, l, location_data)
+                cfg = process_file(cfg, output_dir, s, l, location_data)
 
     utils.save_config(CONFIG_PATH, cfg)
 

@@ -38,8 +38,8 @@
       <file leaf-file-name="loggercollector.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/loggerparser/loggercollector.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5641026">
-              <caret line="54" column="77" selection-start-line="54" selection-start-column="77" selection-end-line="54" selection-end-column="77" />
+            <state vertical-scroll-proportion="0.51839465">
+              <caret line="70" column="47" selection-start-line="70" selection-start-column="47" selection-end-line="70" selection-end-column="47" />
               <folding>
                 <element signature="e#15#25#0" expanded="true" />
               </folding>
@@ -856,8 +856,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/loggerparser/loggercollector.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5641026">
-          <caret line="54" column="77" selection-start-line="54" selection-start-column="77" selection-end-line="54" selection-end-column="77" />
+        <state vertical-scroll-proportion="0.51839465">
+          <caret line="70" column="47" selection-start-line="70" selection-start-column="47" selection-end-line="70" selection-end-column="47" />
           <folding>
             <element signature="e#15#25#0" expanded="true" />
           </folding>
