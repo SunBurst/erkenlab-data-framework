@@ -75,7 +75,7 @@ def process_file(cfg, output_dir, site, location, location_data):
                     print(i, records)
                     total_records += len(records)
                     print("Packet %d with %d records" % (i, len(records)))
-                    f.write("%s" % records.to_csv(delimiter=',', header=header))
+                    f.write("%s" % records.to_csv(header=header))
                     if header:
                         header = False
 
