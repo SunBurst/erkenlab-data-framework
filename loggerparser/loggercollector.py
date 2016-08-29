@@ -40,7 +40,7 @@ def process_file(cfg, output_dir, site, location, location_data):
             time_zone = log_data.get('time_zone')
             pytz_tz = pytz.timezone(time_zone)
             start_time = log_data.get('start')
-
+            print(start_time, type(start_time))
             if start_time:
                 start_time = datetime.strptime(start_time, time_format)
             else:
