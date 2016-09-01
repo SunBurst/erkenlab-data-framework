@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f875a4f9-7fbd-4379-9937-d4d8cbc2f3cd" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loggerparser/fileformatter.py" afterPath="$PROJECT_DIR$/loggerparser/fileformatter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loggerparser/filesplitter.py" afterPath="$PROJECT_DIR$/loggerparser/filesplitter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loggerparser/loggercollector.py" afterPath="$PROJECT_DIR$/loggerparser/loggercollector.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loggerparser/main.py" afterPath="$PROJECT_DIR$/loggerparser/main.py" />
     </list>
     <ignored path="loggerparser.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,7 +27,7 @@
         <entry file="file://$PROJECT_DIR$/loggerparser/filesplitter.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+              <caret line="163" column="45" selection-start-line="163" selection-start-column="45" selection-end-line="163" selection-end-column="45" />
               <folding>
                 <element signature="e#15#24#0" expanded="true" />
               </folding>
@@ -86,8 +82,8 @@
       <file leaf-file-name="fileformatter.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/loggerparser/fileformatter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.40753424">
-              <caret line="44" column="26" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.26198632">
+              <caret line="198" column="0" selection-start-line="198" selection-start-column="0" selection-end-line="198" selection-end-column="0" />
               <folding>
                 <element signature="e#15#25#0" expanded="true" />
               </folding>
@@ -128,8 +124,8 @@
       <file leaf-file-name="fileformatter.yaml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cfg/fileformatter.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.9230769">
-              <caret line="6" column="17" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="17" />
+            <state vertical-scroll-proportion="-9.153846">
+              <caret line="104" column="79" selection-start-line="104" selection-start-column="23" selection-end-line="104" selection-end-column="79" />
               <folding />
             </state>
           </provider>
@@ -785,6 +781,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="24.758562">
           <caret line="891" column="24" selection-start-line="891" selection-start-column="13" selection-end-line="891" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -814,10 +811,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/loggerparser/loggercollector.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="26" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="26" />
+          <folding>
+            <element signature="e#15#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/loggerparser/filesplitter.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+          <caret line="163" column="45" selection-start-line="163" selection-start-column="45" selection-end-line="163" selection-end-column="45" />
           <folding>
             <element signature="e#15#24#0" expanded="true" />
           </folding>
@@ -834,26 +841,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cfg/fileformatter.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.9230769">
-          <caret line="6" column="17" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="17" />
+        <state vertical-scroll-proportion="-9.153846">
+          <caret line="104" column="79" selection-start-line="104" selection-start-column="23" selection-end-line="104" selection-end-column="79" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/loggerparser/loggercollector.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="26" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="26" />
-          <folding>
-            <element signature="e#15#25#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/loggerparser/fileformatter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40753424">
-          <caret line="44" column="26" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.26198632">
+          <caret line="198" column="0" selection-start-line="198" selection-start-column="0" selection-end-line="198" selection-end-column="0" />
           <folding>
             <element signature="e#15#25#0" expanded="true" />
           </folding>

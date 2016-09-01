@@ -144,12 +144,22 @@ def process_file(cfg, output_dir, site, location, file, file_data, to_utc, time_
     df = None
 
     if logger_model == 'CR10X':
-        df = pandas.read_csv(file_path, skiprows=skip_rows, names=data_columns, usecols=use_columns,
+        try:
+            df = pandas.read_csv(file_path, skiprows=skip_rows, names=data_columns, usecols=use_columns,
                          parse_dates={time_parsed_column: time_columns}, index_col=time_parsed_column,
                          date_parser=parse_cr10x)
+        except:
+            print("No columns to parse from file or file could not be opened.")
+
+            return skip_rows
     elif logger_model == 'CR1000':
-        df = pandas.read_csv(file_path, skiprows=skip_rows, names=data_columns, usecols=use_columns,
+        try:
+            df = pandas.read_csv(file_path, skiprows=skip_rows, names=data_columns, usecols=use_columns,
                                 parse_dates={time_parsed_column: time_columns}, index_col=time_parsed_column)
+        except:
+            print("No columns to parse from file or file could not be opened.")
+
+            return skip_rows
     try:
         df.index = df.index.tz_localize(tz=time_zone)
     except TypeError:
@@ -175,11 +185,10 @@ def process_file(cfg, output_dir, site, location, file, file_data, to_utc, time_
 
         num_of_processed_rows = len(df)
 
-        conf['sites'][site]['locations'][location]['files'][file]['skip_rows'] = skip_rows + num_of_processed_rows
+        return skip_rows + num_of_processed_rows
 
-        return conf
 
-    return conf
+    return skip_rows
 
 
 def process_files(args):
@@ -197,18 +206,21 @@ def process_files(args):
             if args.file:
                 file_data = files.get(args.file)
                 logger_model = file_data.get('logger_model')
-                cfg = process_file(cfg, output_dir, args.site, args.location, args.file, file_data, args.toutc,
+                new_skip_rows = process_file(cfg, output_dir, args.site, args.location, args.file, file_data, args.toutc,
                                    time_zone)
+                cfg['sites'][args.site]['locations'][args.location]['files'][args.file]['skip_rows'] = new_skip_rows
             else:
                 for f, file_data in files.items():
                     logger_model = file_data.get('logger_model')
-                    cfg = process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
+                    new_skip_rows = process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
+                    cfg['sites'][args.site]['locations'][args.location]['files'][f]['skip_rows'] = new_skip_rows
         else:
             for l, location_data in locations.items():
                 files = location_data.get('files')
                 for f, file_data in files.items():
                     logger_model = file_data.get('logger_model')
-                    cfg = process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
+                    new_skip_rows = process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
+                    cfg['sites'][args.site]['locations'][l]['files'][f]['skip_rows'] = new_skip_rows
     else:
         for s, site_data in sites.items():
             locations = site_data.get('locations')
@@ -217,7 +229,8 @@ def process_files(args):
                 for f, file_data in files.items():
                     print(f, file_data)
                     logger_model = file_data.get('logger_model')
-                    process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
+                    new_skip_rows = process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
+                    cfg['sites'][s]['locations'][l]['files'][f]['skip_rows'] = new_skip_rows
 
     utils.save_config(CONFIG_PATH, cfg)
 
