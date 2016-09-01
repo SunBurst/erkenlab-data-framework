@@ -44,8 +44,6 @@ def setup_parser():
     parser_splitfiles_run.add_argument('-s', '--site', action='store', dest='site', help='Specific site (e.g. lake) to run.')
     parser_splitfiles_run.add_argument('-l', '--location', action='store', dest='location',
                             help='Specific site location (e.g. lake position) to run.')
-    parser_splitfiles_run.add_argument('-y', '--year', action='store_true', dest='split_by_year',
-                            help='Split files into subfolders by year.', required=False)
 
     parser_splitfiles_edit = parser_splitfiles_modes.add_parser('edit', help='Edit specific site.')
     parser_splitfiles_edit.add_argument('-p', '--parameter', action='store', nargs='+',
@@ -57,8 +55,6 @@ def setup_parser():
     parser_splitfiles_edit.add_argument('-f', '--file', action='store', dest='file_path', help='Set location file path.')
     parser_splitfiles_edit.add_argument('-r', '--replacement', action='store', nargs='+', dest='replacement', required=True,
                              help='Replacement value(s).')
-    parser_splitfiles_edit.add_argument('-y', '--year', action='store_true', dest='split_by_year', required=False,
-                             help='Split files into subfolders by year.')
 
     parser_splitfiles_updating = parser_splitfiles_modes.add_parser('updating', help='Manage automatic updating.')
     parser_splitfiles_updating.add_argument('-s', '--site', action='store', dest='site', help='Specific site to manage.')
@@ -70,8 +66,6 @@ def setup_parser():
     parser_splitfiles_file.add_argument('-i', '--input', dest='input', required=True, metavar="FILE",
                                     type=lambda x: utils.is_valid_file(parser, x), help='Input file.')
     parser_splitfiles_file.add_argument('-o', '--output', dest='output', required=True, help='Output directory.')
-    parser_splitfiles_file.add_argument('-y', '--year', dest='split_by_year', required=False,
-                                        help='Split files into subfolders by year.')
 
     args = parser.parse_args()
 
@@ -92,8 +86,6 @@ def setup_parser():
                     elif arg == 'line_num' and (args.site is None or args.location is None):
                         parser.error("--site, --location and --number are required.")
                     elif arg == 'file_path' and (args.site is None or args.location is None):
-                        parser.error("--site, --location and --file are required.")
-                    elif arg == 'split_by_year' and (args.site is None or args.location is None):
                         parser.error("--site, --location and --file are required.")
 
             if args.mode_parser_name == 'updating':

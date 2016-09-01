@@ -57,11 +57,13 @@ def process_file(cfg, output_dir, site, location, location_data):
 
             os.makedirs(os.path.dirname(target_file), exist_ok=True)    # Create file if it doesn't already exists.
 
+            if not os.path.exists(target_file):
+
             with open(target_file, 'a') as temp_f:
                 pass
 
             with open(target_file, 'r') as file_db:
-                db = csv_to_dict(file_db, delimiter=',')
+                db = csv_to_dict(file_db)
 
             with open(target_file, mode='a') as f:
                 if len(db) > 0:
@@ -72,7 +74,6 @@ def process_file(cfg, output_dir, site, location, location_data):
                 total_records = 0
 
                 for i, records in enumerate(data):
-                    print(i, records)
                     total_records += len(records)
                     print("Packet %d with %d records" % (i, len(records)))
                     f.write("%s" % records.to_csv(header=header))

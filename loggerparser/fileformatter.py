@@ -30,25 +30,31 @@ class RawDataTimeManager(object):
     def parse_custom_format(self, *args):
         pass
 
-    def parse_time(self, *args, to_utc):
+    def parse_time(self, *args):
         """Converts the given raw data time format to a datetime object (local time zone -> UTC).
         Args:
             args:
         """
 
         (time_fmt, time_str) = self.parse_custom_format(*args)
-        t = time.strptime(time_str, time_fmt)
-        dt = datetime.fromtimestamp(time.mktime(t))
-        loc_dt = self.tz.localize(dt)
+
+        try:
+            t = time.strptime(time_str, time_fmt)
+            dt = datetime.fromtimestamp(time.mktime(t))
+            loc_dt = self.tz.localize(dt)
+        except ValueError:
+            print("Could not parse time string {0} using the foramt {1}".format(time_str, time_fmt))
+            loc_dt = datetime.fromtimestamp(0, self.tz)
+
         parsed_dt = loc_dt
-        if to_utc:
-            utc_dt = loc_dt.astimezone(pytz.utc)
-            parsed_dt = utc_dt
+        #if to_utc:
+        #    utc_dt = loc_dt.astimezone(pytz.utc)
+        #    parsed_dt = utc_dt
 
         return parsed_dt
 
 
-class CampbellLegacy(RawDataTimeManager):
+class CR10X(RawDataTimeManager):
 
     def __init__(self, time_zone='UTC'):
         RawDataTimeManager.__init__(self, time_zone)
@@ -63,7 +69,6 @@ class CampbellLegacy(RawDataTimeManager):
         """
 
         time_args = list(args)
-
         temp_lib = []
 
         for i, time_arg in enumerate(time_args):
@@ -115,17 +120,20 @@ class CampbellLegacy(RawDataTimeManager):
 
 def process_file(cfg, output_dir, site, location, file, file_data, to_utc, time_zone):
 
-    def parse(time_string):
-        raw_tm = CampbellLegacy(time_zone)
+    def parse_cr10x(time_string):
+        raw_tm = CR10X(time_zone)
         time_args = time_string.split(' ')
-        dt = raw_tm.parse_time(*time_args, to_utc=to_utc)
+
+        dt = raw_tm.parse_time(*time_args)
 
         return dt
 
+    conf = cfg
     file_name = file_data.get('name')
     file_path = file_data.get('file_path')
     time_columns = file_data.get('time_columns')
     skip_rows = file_data.get('skip_rows')
+    logger_model = file_data.get('logger_model')
     data_columns = file_data.get('columns')
     export_columns = file_data.get('export_columns')
     use_columns = file_data.get('use_columns')
@@ -133,25 +141,45 @@ def process_file(cfg, output_dir, site, location, file, file_data, to_utc, time_
     file_ext = os.path.splitext(os.path.abspath(file_path))[1]	# Get file extension, e.g. '.dat', '.csv' etc.
     print("Processing file: {0}, {1}".format(file, file_path))
 
-    df = pandas.read_csv(file_path, skiprows=skip_rows, names=data_columns, usecols=use_columns,
-                         parse_dates={time_parsed_column: time_columns}, date_parser=parse)
+    df = None
 
-    fixed_file = os.path.join(
-        os.path.abspath(output_dir), site, location,
-        file_name + file_ext)	# Construct absolute file path to subfile.
-    os.makedirs(os.path.dirname(fixed_file), exist_ok=True)    # Create file if it doesn't already exists.
+    if logger_model == 'CR10X':
+        df = pandas.read_csv(file_path, skiprows=skip_rows, names=data_columns, usecols=use_columns,
+                         parse_dates={time_parsed_column: time_columns}, index_col=time_parsed_column,
+                         date_parser=parse_cr10x)
+    elif logger_model == 'CR1000':
+        df = pandas.read_csv(file_path, skiprows=skip_rows, names=data_columns, usecols=use_columns,
+                                parse_dates={time_parsed_column: time_columns}, index_col=time_parsed_column)
+    try:
+        df.index = df.index.tz_localize(tz=time_zone)
+    except TypeError:
+        print("Datetime already tz-aware")
 
-    if skip_rows > 0:
-        header = None
-    else:
+    if to_utc:
+        df.index = df.index.tz_convert(tz=pytz.UTC)
+    if len(df) > 0:
+        fixed_file = os.path.join(
+            os.path.abspath(output_dir), site, location,
+            file_name + file_ext)	# Construct absolute file path to subfile.
+        os.makedirs(os.path.dirname(fixed_file), exist_ok=True)    # Create file if it doesn't already exists.
+
         header = export_columns
 
-    df.to_csv(fixed_file, mode='a', columns=export_columns, header=header, date_format="%Y-%m-%d %H:%M:%S%z",
-              float_format='%.3f', index=False)
+        if os.path.exists(fixed_file):
+            f_list = utils.open_file(fixed_file)
+            if len(f_list) > 0:
+                header = None
 
-    num_of_processed_rows = len(df)
+        df.to_csv(fixed_file, mode='a', columns=export_columns, header=header, date_format="%Y-%m-%d %H:%M:%S%z",
+                  float_format='%.3f', index=True)
 
-    cfg['sites'][site][location]['files'][file]['skip_rows'] = skip_rows + num_of_processed_rows
+        num_of_processed_rows = len(df)
+
+        conf['sites'][site]['locations'][location]['files'][file]['skip_rows'] = skip_rows + num_of_processed_rows
+
+        return conf
+
+    return conf
 
 
 def process_files(args):
@@ -162,26 +190,33 @@ def process_files(args):
 
     if args.site:
         site_data = sites.get(args.site)
+        locations = site_data.get('locations')
         if args.location:
-            location_data = site_data.get(args.location)
+            location_data = locations.get(args.location)
             files = location_data.get('files')
             if args.file:
                 file_data = files.get(args.file)
-                process_file(cfg, output_dir, args.site, args.location, args.file, file_data, args.toutc, time_zone)
+                logger_model = file_data.get('logger_model')
+                cfg = process_file(cfg, output_dir, args.site, args.location, args.file, file_data, args.toutc,
+                                   time_zone)
             else:
                 for f, file_data in files.items():
-                    process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
+                    logger_model = file_data.get('logger_model')
+                    cfg = process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
         else:
-            for l, location_data in site_data.items():
+            for l, location_data in locations.items():
                 files = location_data.get('files')
                 for f, file_data in files.items():
-                    process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
+                    logger_model = file_data.get('logger_model')
+                    cfg = process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
     else:
         for s, site_data in sites.items():
-            for l, location_data in site_data.items():
+            locations = site_data.get('locations')
+            for l, location_data in locations.items():
                 files = location_data.get('files')
                 for f, file_data in files.items():
                     print(f, file_data)
+                    logger_model = file_data.get('logger_model')
                     process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
 
     utils.save_config(CONFIG_PATH, cfg)

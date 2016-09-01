@@ -24,7 +24,7 @@ def identify_array_id(row):
     return row[0]
 
 
-def to_subfiles(file, output_dir, split_by_year, site=None, location=None, array_ids=None, line_num=0):
+def to_subfiles(file, output_dir, site=None, location=None, array_ids=None, line_num=0):
     """Split csv file into subfiles based on its first element.
 
     Args:
@@ -33,7 +33,6 @@ def to_subfiles(file, output_dir, split_by_year, site=None, location=None, array
         array_ids (dict): Array ID:s lookup table for translating codes to plain text.
         file (string): Source file's absolute path.
         line_num (int): File line number, used for tracking.
-        split_by_year (bool): Split into subfolders by year.
 
     Returns:
         The number of lines processed.
@@ -104,7 +103,7 @@ def to_subfiles(file, output_dir, split_by_year, site=None, location=None, array
     return num_of_new_rows
 
 
-def run_file(file_input, file_output, split_by_year):
+def run_file(file_input, file_output):
     """Process single file.
 
     Args:
@@ -112,7 +111,7 @@ def run_file(file_input, file_output, split_by_year):
         file_output (string): Path to output directory.
 
     """
-    to_subfiles(file_input, file_output, split_by_year)
+    to_subfiles(file_input, file_output)
 
 
 def update_location(cfg, output_dir, site, location, location_data):
@@ -131,9 +130,8 @@ def update_location(cfg, output_dir, site, location, location_data):
     line_num = location_data.get('line_num')
     array_ids = location_data.get('array_ids')
     file_path = location_data.get('file_path')
-    split_by_year = location_data.get('split_by_year')
-    num_of_new_rows = to_subfiles(file_path, output_dir, split_by_year, site, location, array_ids, line_num)
-    cfg['sites'][site][location]['line_num'] = line_num + num_of_new_rows
+    num_of_new_rows = to_subfiles(file_path, output_dir, site, location, array_ids, line_num)
+    cfg['sites'][site]['locations'][location]['line_num'] = line_num + num_of_new_rows
 
 
 def run_system(**kwargs):
@@ -149,20 +147,22 @@ def run_system(**kwargs):
     if not kwargs:
         sites = cfg['sites']
         for site, site_data in sites.items():
-            for location, location_data in site_data.items():
+            locations = site_data.get('locations')
+            for location, location_data in locations.items():
                 if location_data.get('automatic_updating'):
                     update_location(cfg, output_dir, site, location, location_data)
 
     if 'site' in kwargs:
         site = kwargs.get('site')
         site_data = cfg['sites'][site]
+        locations = site_data.get('locations')
         if not 'location' in kwargs:
-            for location, location_data in site_data.items():
+            for location, location_data in locations.items():
                 if location_data.get('automatic_updating'):
                     update_location(cfg, output_dir, site, location, location_data)
         else:
             location = kwargs.get('location')
-            location_data = cfg['sites'][site][location]
+            location_data = cfg['sites'][site]['locations'][location]
             if location_data.get('automatic_updating'):
                 update_location(cfg, output_dir, site, location, location_data)
 
@@ -180,16 +180,14 @@ def edit_cfg_file(parameters, replacements, old_values=None):
     """
     cfg = utils.load_config(CONFIG_PATH)
     if 'auto_updating' in replacements:
-        cfg['sites'][parameters.get('site')][parameters.get('location')]['automatic_updating'] = replacements.get('auto_updating')
+        cfg['sites'][parameters.get('site')]['locations'][parameters.get('location')]['automatic_updating'] = replacements.get('auto_updating')
     if 'file_path' in replacements:
-        cfg['sites'][parameters.get('site')][parameters.get('location')]['file_path'] = replacements.get('file_path')
-    if 'split_by_year' in replacements:
-        cfg['sites'][parameters.get('site')][parameters.get('location')]['split_by_year'] = replacements.get('split_by_year')
+        cfg['sites'][parameters.get('site')]['locations'][parameters.get('location')]['file_path'] = replacements.get('file_path')
     if 'line_num' in replacements:
-        cfg['sites'][parameters.get('site')][parameters.get('location')]['line_num'] = replacements.get('line_num')
+        cfg['sites'][parameters.get('site')]['locations'][parameters.get('location')]['line_num'] = replacements.get('line_num')
     if 'location' in replacements:
-        cfg['sites'][parameters.get('site')][replacements.get('location')] = cfg['sites'][parameters.get('site')][old_values.get('location')]
-        cfg['sites'][parameters.get('site')].pop(old_values.get('location'))
+        cfg['sites'][parameters.get('site')]['locations'][replacements.get('location')] = cfg['sites'][parameters.get('site')][old_values.get('location')]
+        cfg['sites'][parameters.get('site')]['locations'].pop(old_values.get('location'))
     if 'site' in replacements:
         cfg['sites'][replacements.get('site')] = cfg['sites'][old_values.get('site')]
         cfg['sites'].pop(old_values.get('site'))
@@ -213,7 +211,7 @@ def process_args(args):
                     utils.clean_dir(args.clean, CONFIG_PATH)
             elif args.mode_parser_name == 'run':
                 if args.site:
-                    info = {'site' : args.site, 'split_by_year' : args.split_by_year}
+                    info = {'site' : args.site}
                     if args.location:
                         info['location'] = args.location
                     run_system(**info)
@@ -237,4 +235,4 @@ def process_args(args):
                     edit_cfg_file(parameters, {'auto_updating' : False})
 
         elif args.top_parser_name == 'file':
-            run_file(args.input, args.output, args.split_by_year)
+            run_file(args.input, args.output)
