@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/loggerparser.iml" filepath="$PROJECT_DIR$/.idea/loggerparser.iml" />
+      <module fileurl="file://D:/virtualenv/py3/loggerfileupdater/.idea/loggerfileupdater.iml" filepath="D:/virtualenv/py3/loggerfileupdater/.idea/loggerfileupdater.iml" />
     </modules>
   </component>
 </project>

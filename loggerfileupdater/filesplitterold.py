@@ -6,10 +6,10 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from collections import defaultdict
 from datetime import datetime
 
-from loggerparser import utils
+from loggerfileupdater import utils
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-CONFIG_PATH = os.path.join(BASE_DIR, 'cfg/filesplitter.yaml')
+CONFIG_PATH = os.path.join(BASE_DIR, 'cfg/filesplitterold.yaml')
 
 
 def identify_array_id(row):
@@ -170,7 +170,7 @@ def run_system(**kwargs):
 
 
 def edit_cfg_file(parameters, replacements, old_values=None):
-    """Edit specific parameters in the configuration file 'filesplitter.yaml'.
+    """Edit specific parameters in the configuration file 'filesplitterold.yaml'.
 
     Args:
         parameters (dict): Parameters needed to edit.

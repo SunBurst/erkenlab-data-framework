@@ -2,7 +2,7 @@ import os
 
 from datetime import datetime
 
-from loggerparser import utils
+from loggerfileupdater import utils
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 CONFIG_PATH = os.path.join(BASE_DIR, 'cfg/fileupdate.yaml')

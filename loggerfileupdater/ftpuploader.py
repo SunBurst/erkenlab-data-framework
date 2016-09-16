@@ -11,7 +11,7 @@ from datetime import datetime
 
 import pandas
 
-from loggerparser import utils
+from loggerfileupdater import utils
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 CONFIG_PATH = os.path.join(BASE_DIR, 'cfg/ftpuploader.yaml')

@@ -7,7 +7,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from datetime import datetime
 from shutil import copyfile
 
-from loggerparser import utils
+from loggerfileupdater import utils
 
 
 def append_file(source_data, append_data, headers_line_num):

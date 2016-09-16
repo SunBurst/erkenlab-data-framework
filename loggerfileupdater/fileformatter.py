@@ -11,7 +11,7 @@ import pandas
 
 from datetime import datetime
 
-from loggerparser import utils
+from loggerfileupdater import utils
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 CONFIG_PATH = os.path.join(BASE_DIR, 'cfg/fileformatter.yaml')
@@ -118,7 +118,7 @@ class CR10X(RawDataTimeManager):
         return (parsed_fmt, parsed_time)
 
 
-def process_file(cfg, output_dir, site, location, file, file_data, to_utc, time_zone):
+def process_file(output_dir, site, location, file, file_data, to_utc, time_zone):
 
     def parse_cr10x(time_string):
         raw_tm = CR10X(time_zone)
@@ -128,16 +128,14 @@ def process_file(cfg, output_dir, site, location, file, file_data, to_utc, time_
 
         return dt
 
-    conf = cfg
     file_name = file_data.get('name')
     file_path = file_data.get('file_path')
     time_columns = file_data.get('time_columns')
+    header_row = file_data.get('header_row')
     skip_rows = file_data.get('skip_rows')
     logger_model = file_data.get('logger_model')
-    data_columns = file_data.get('columns')
-    export_columns = file_data.get('export_columns')
-    use_columns = file_data.get('use_columns')
     time_parsed_column = file_data.get('time_parsed_column')
+    ignore_columns = file_data.get('ignore_columns')
     file_ext = os.path.splitext(os.path.abspath(file_path))[1]	# Get file extension, e.g. '.dat', '.csv' etc.
     print("Processing file: {0}, {1}".format(file, file_path))
 
@@ -145,21 +143,25 @@ def process_file(cfg, output_dir, site, location, file, file_data, to_utc, time_
 
     if logger_model == 'CR10X':
         try:
-            df = pandas.read_csv(file_path, skiprows=skip_rows, names=data_columns, usecols=use_columns,
-                         parse_dates={time_parsed_column: time_columns}, index_col=time_parsed_column,
-                         date_parser=parse_cr10x)
+            df = pandas.read_csv(file_path, skiprows=range(header_row + 1, skip_rows),
+                    header=header_row, parse_dates={time_parsed_column: time_columns}, index_col=time_parsed_column,
+                    date_parser=parse_cr10x)
         except:
             print("No columns to parse from file or file could not be opened.")
 
             return skip_rows
     elif logger_model == 'CR1000':
         try:
-            df = pandas.read_csv(file_path, skiprows=skip_rows, names=data_columns, usecols=use_columns,
-                                parse_dates={time_parsed_column: time_columns}, index_col=time_parsed_column)
+            df = pandas.read_csv(file_path, skiprows=range(header_row + 1, skip_rows),
+                    header=header_row, parse_dates={time_parsed_column: time_columns}, index_col=time_parsed_column)
         except:
             print("No columns to parse from file or file could not be opened.")
 
             return skip_rows
+    else:
+        print("Logger model {0} is not supported".format(logger_model))
+
+        return skip_rows
     try:
         df.index = df.index.tz_localize(tz=time_zone)
     except TypeError:
@@ -173,6 +175,9 @@ def process_file(cfg, output_dir, site, location, file, file_data, to_utc, time_
             file_name + file_ext)	# Construct absolute file path to subfile.
         os.makedirs(os.path.dirname(fixed_file), exist_ok=True)    # Create file if it doesn't already exists.
 
+        if not ignore_columns:
+            ignore_columns = []
+        export_columns = [col for col in df.columns.values if col not in ignore_columns]
         header = export_columns
 
         if os.path.exists(fixed_file):
@@ -186,7 +191,6 @@ def process_file(cfg, output_dir, site, location, file, file_data, to_utc, time_
         num_of_processed_rows = len(df)
 
         return skip_rows + num_of_processed_rows
-
 
     return skip_rows
 
@@ -205,21 +209,18 @@ def process_files(args):
             files = location_data.get('files')
             if args.file:
                 file_data = files.get(args.file)
-                logger_model = file_data.get('logger_model')
-                new_skip_rows = process_file(cfg, output_dir, args.site, args.location, args.file, file_data, args.toutc,
+                new_skip_rows = process_file(output_dir, args.site, args.location, args.file, file_data, args.toutc,
                                    time_zone)
                 cfg['sites'][args.site]['locations'][args.location]['files'][args.file]['skip_rows'] = new_skip_rows
             else:
                 for f, file_data in files.items():
-                    logger_model = file_data.get('logger_model')
-                    new_skip_rows = process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
+                    new_skip_rows = process_file(output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
                     cfg['sites'][args.site]['locations'][args.location]['files'][f]['skip_rows'] = new_skip_rows
         else:
             for l, location_data in locations.items():
                 files = location_data.get('files')
                 for f, file_data in files.items():
-                    logger_model = file_data.get('logger_model')
-                    new_skip_rows = process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
+                    new_skip_rows = process_file(output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
                     cfg['sites'][args.site]['locations'][l]['files'][f]['skip_rows'] = new_skip_rows
     else:
         for s, site_data in sites.items():
@@ -227,9 +228,7 @@ def process_files(args):
             for l, location_data in locations.items():
                 files = location_data.get('files')
                 for f, file_data in files.items():
-                    print(f, file_data)
-                    logger_model = file_data.get('logger_model')
-                    new_skip_rows = process_file(cfg, output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
+                    new_skip_rows = process_file(output_dir, args.site, args.location, f, file_data, args.toutc, time_zone)
                     cfg['sites'][s]['locations'][l]['files'][f]['skip_rows'] = new_skip_rows
 
     utils.save_config(CONFIG_PATH, cfg)

@@ -33,7 +33,7 @@ def save_config(cfg_file, cfg_mod):
 
 
 def change_dir(dir, cfg_file):
-    """Changes working directory by updating the configuration file 'filesplitter.yaml'.
+    """Changes working directory by updating the configuration file 'filesplitterold.yaml'.
 
     Args:
         dir (string): Path to directory.
@@ -102,3 +102,17 @@ class FileArgumentParser(argparse.ArgumentParser):
                 type=lambda x: self.__is_valid_directory(self, x)
                 kwargs['type'] = type
         self.add_argument(*args, **kwargs)
+
+
+def round_of_rating(number, rating):
+    temp_rating = 0
+    if rating == 0.25:
+        temp_rating = 4
+    elif rating == 0.5:
+        temp_rating = 2
+    elif rating == 1.0:
+        temp_rating = 1
+    else:
+        raise ValueError("Invalid data interval. Valid intervals are 0.25, 0.5, 1.0")
+
+    return round(number * temp_rating) / temp_rating
