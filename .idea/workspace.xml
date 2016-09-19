@@ -2,20 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f875a4f9-7fbd-4379-9937-d4d8cbc2f3cd" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/loggerparser/cassandraupdater.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/loggerparser/fileformatter.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/loggerparser/filemerger.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/loggerparser/filesplitter.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/loggerparser/filestocassandrafmt.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/loggerparser/fileupdater.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/loggerparser/ftpuploader.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/loggerparser/loggercollector.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/loggerparser/main.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/loggerparser/utils.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/loggerfileupdater/cr10xsplitter.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/loggerfileupdater/cr10x.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/loggerparser.iml" afterPath="$PROJECT_DIR$/.idea/loggerfileupdater.iml" />
     </list>
     <ignored path="loggerparser.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,49 +29,57 @@
         <entry file="file://$PROJECT_DIR$/loggerfileupdater/utils.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="72" column="59" selection-start-line="72" selection-start-column="4" selection-end-line="72" selection-end-column="59" />
+              <caret line="19" column="19" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cr10x.yaml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cfg/cr10x.yaml">
+      <file leaf-file-name="cr10xsplitter.yaml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cfg/cr10xsplitter.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-21.576923">
-              <caret line="33" column="80" selection-start-line="33" selection-start-column="80" selection-end-line="33" selection-end-column="80" />
+            <state vertical-scroll-proportion="-19.615385">
+              <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="filestocassandrafmt.yaml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cfg/filestocassandrafmt.yaml">
+      <file leaf-file-name="fileformatter.yaml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cfg/fileformatter.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+            <state vertical-scroll-proportion="-175.23077">
+              <caret line="268" column="64" selection-start-line="268" selection-start-column="64" selection-end-line="268" selection-end-column="64" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cr10x.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/loggerfileupdater/cr10x.py">
+      <file leaf-file-name="ftpsettings.yaml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cfg/ftpsettings.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6270208">
-              <caret line="233" column="60" selection-start-line="233" selection-start-column="60" selection-end-line="233" selection-end-column="60" />
-              <folding>
-                <element signature="e#40#50#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="-1.9615384">
+              <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="22" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="csv.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35/Lib/csv.py">
+      <file leaf-file-name="fileupdate.yaml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cfg/fileupdate.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="filesplitterold.yaml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cfg/filesplitterold.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -91,9 +88,41 @@
       <file leaf-file-name="ftpuploader.yaml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cfg/ftpuploader.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="-26.807692">
               <caret line="41" column="56" selection-start-line="41" selection-start-column="56" selection-end-line="41" selection-end-column="56" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cassandra.yaml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cfg/cassandra.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.2692308">
+              <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="filestocassandrafmt.yaml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cfg/filestocassandrafmt.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.9230769">
+              <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cr10xsplitter.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/loggerfileupdater/cr10xsplitter.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="2.042725">
+              <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
+              <folding>
+                <element signature="e#118#128#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -143,6 +172,8 @@
         <option value="$PROJECT_DIR$/../campbellsciparser/loggerparser/device.py" />
         <option value="$PROJECT_DIR$/cfg/cr10x.yaml" />
         <option value="$PROJECT_DIR$/loggerfileupdater/cr10x.py" />
+        <option value="$PROJECT_DIR$/cfg/cr10xsplitter.yaml" />
+        <option value="$PROJECT_DIR$/loggerfileupdater/cr10xsplitter.py" />
       </list>
     </option>
   </component>
@@ -177,7 +208,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -252,11 +282,12 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../campbellsciparser" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
@@ -407,25 +438,25 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2159228" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2159228" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3277405" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -446,12 +477,20 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/loggerfileupdater/cr10x.py">
+    <entry file="file://$PROJECT_DIR$/cfg/ftpuploader.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="56" selection-start-line="41" selection-start-column="56" selection-end-line="41" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loggerfileupdater/cr10xsplitter.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#40#50#0" expanded="true" />
+            <element signature="e#118#128#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -661,20 +700,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cfg/filesplitterold.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cfg/cassandra.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharm50/system/python_stubs/464513862/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -717,20 +742,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cfg/fileformatter.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="268" column="64" selection-start-line="268" selection-start-column="64" selection-end-line="268" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cfg/ftpsettings.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharm50/system/python_stubs/464513862/_csv.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.1523973">
@@ -745,30 +756,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/loggerfileupdater/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="72" column="59" selection-start-line="72" selection-start-column="4" selection-end-line="72" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cfg/ftpuploader.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="56" selection-start-line="41" selection-start-column="56" selection-end-line="41" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cfg/filestocassandrafmt.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35/Lib/csv.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -777,20 +764,94 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cfg/cr10x.yaml">
+    <entry file="file://$PROJECT_DIR$/../venv/Lib/site-packages/campbellsciparser/device.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-21.576923">
-          <caret line="33" column="80" selection-start-line="33" selection-start-column="80" selection-end-line="33" selection-end-column="80" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="92" column="42" selection-start-line="92" selection-start-column="33" selection-end-line="92" selection-end-column="42" />
+          <folding>
+            <element signature="e#133#143#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cfg/filestocassandrafmt.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.9230769">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/loggerfileupdater/cr10x.py">
+    <entry file="file://$PROJECT_DIR$/cfg/cassandra.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6270208">
-          <caret line="233" column="60" selection-start-line="233" selection-start-column="60" selection-end-line="233" selection-end-column="60" />
+        <state vertical-scroll-proportion="-3.2692308">
+          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cfg/filesplitterold.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cfg/fileformatter.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-175.23077">
+          <caret line="268" column="64" selection-start-line="268" selection-start-column="64" selection-end-line="268" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cfg/ftpsettings.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.9615384">
+          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cfg/fileupdate.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cfg/ftpuploader.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-26.807692">
+          <caret line="41" column="56" selection-start-line="41" selection-start-column="56" selection-end-line="41" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loggerfileupdater/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="19" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cfg/cr10xsplitter.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.615385">
+          <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loggerfileupdater/cr10xsplitter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.042725">
+          <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
           <folding>
-            <element signature="e#40#50#0" expanded="true" />
+            <element signature="e#118#128#0" expanded="true" />
           </folding>
         </state>
       </provider>
