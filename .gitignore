@@ -1,2 +1,9 @@
-# config files
+# Cache files
+services/__pycache__
+tests/__pycache__
+
+# Config files
 cfg/*.yaml
+
+# PyCharm files
+.idea
