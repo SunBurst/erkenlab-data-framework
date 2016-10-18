@@ -1,0 +1,30 @@
+settings:
+    active: true
+    data_output_dir: 'no need for testing'
+sites:
+    lake:
+        locations:
+            lake_location:
+                time_zone: UTC
+                file_path: 'cr10x_sample_data.dat'
+                line_num: 0
+                array_ids:
+                    '100':
+                        headers: [Column_name_1, Column_name_2, Column_name_3,
+                            Column_name_4, Column_name_5, Column_name_6]
+                        export_columns: [Time_parsed_column, Column_name_5, Column_name_6]
+                        name: Array_ID_Label_1
+                        time_columns: [Column_name_2, Column_name_3, Column_name_4]
+                        time_parsed_column_name: Time_parsed_column
+                        to_utc: false
+                        include_time_zone: false
+                    '101':
+                        headers: [Column_name_1, Column_name_2, Column_name_3,
+                            Column_name_4, Column_name_5, Column_name_6]
+                        export_columns: [Time_parsed_column, Column_name_3,
+                            Column_name_4, Column_name_5, Column_name_6]
+                        name: Array_ID_Label_2
+                        time_columns: [Column_name_2, Column_name_3]
+                        time_parsed_column_name: Time_parsed_column
+                        to_utc: false
+                        include_time_zone: false

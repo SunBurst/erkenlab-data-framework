@@ -1,0 +1,10 @@
+root:
+    title: test_title
+    child_1:
+        child_1_child_1:
+            test_true: true
+            test_false: false
+            list_1: [list_item_1, list_item_2, list_item_3]
+    child_2:
+        child_2_child_1:
+            test_dict: {'dict_key_1': dict_value_1, 'dict_key_2': dict_value_2}
