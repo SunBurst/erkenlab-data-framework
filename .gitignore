@@ -5,5 +5,10 @@ tests/__pycache__
 # Config files
 cfg/*.yaml
 
+# Dist files
+build
+dist
+ErkenLab_Data_Framework.egg-info
+
 # PyCharm files
 .idea
