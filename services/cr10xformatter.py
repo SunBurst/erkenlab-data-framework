@@ -1,7 +1,7 @@
 #!/usr/bin/env
 # -*- coding: utf-8 -*-
 
-"""Script for parsing and exporting Campbell CR10X mixed-array files. """
+"""Module for parsing and exporting Campbell CR10X mixed-array files. """
 
 import argparse
 import sys
@@ -12,7 +12,7 @@ from collections import OrderedDict
 
 from campbellsciparser import devices
 
-from services import utils
+from services import common, utils
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 CONFIG_PATH = os.path.join(BASE_DIR, 'cfg/cr10xformatter.yaml')
@@ -42,11 +42,18 @@ def process_location(cfg, output_dir, site, location, location_info, track=False
     line_num = location_info.get('line_num', 0)
     time_zone = location_info.get('time_zone')
     file_ext = os.path.splitext(os.path.abspath(file_path))[1]  # Get file extension
-    array_id_names = {array_id: array_id_info.get('name', array_id) for array_id, array_id_info in array_ids.items()}
+    array_id_names = {
+        array_id: array_id_info.get('name', array_id)
+        for array_id, array_id_info in array_ids.items()
+    }
 
     cr10xparser = devices.CR10XParser(time_zone)
     data = devices.CR10XParser.read_array_ids_data(
-        infile_path=file_path, line_num=line_num, fix_floats=True, array_id_names=array_id_names)
+        infile_path=file_path,
+        line_num=line_num,
+        fix_floats=True,
+        array_id_names=array_id_names
+    )
 
     num_of_new_rows = 0
 
@@ -63,11 +70,12 @@ def process_location(cfg, output_dir, site, location, location_info, track=False
         time_columns = array_id_info.get('time_columns')
         time_parsed_column_name = array_id_info.get('time_parsed_column_name', 'Timestamp')
         to_utc = array_id_info.get('to_utc', False)
+        convert_column_values = array_id_info.get('convert_column_values')
 
         array_id_file = array_name + file_ext
         array_id_file_path = os.path.join(os.path.abspath(output_dir), site, location, array_id_file)
         array_id_mismatches_file = array_name + ' Mismatches' + file_ext
-        array_id_mismaches_file_path = os.path.join(
+        array_id_mismatches_file_path = os.path.join(
             os.path.abspath(output_dir), site, location, array_id_mismatches_file)
 
         array_id_data = data.get(array_name)
@@ -76,6 +84,36 @@ def process_location(cfg, output_dir, site, location, location_info, track=False
             headers=array_headers,
             match_row_lengths=True,
             output_mismatched_rows=True)
+
+        if convert_column_values:
+            array_id_data_converted_values_all = array_id_data_with_column_names
+            for column_name, convert_column_info in convert_column_values.items():
+                value_type = convert_column_info.get('value_type')
+
+                if value_type == 'time':
+                    value_time_columns = convert_column_info.get('value_time_columns')
+                    array_id_data_converted_values_all = cr10xparser.convert_time(
+                        data=array_id_data_with_column_names,
+                        time_parsed_column=column_name,
+                        time_columns=value_time_columns,
+                        replace_time_column=column_name,
+                        to_utc=to_utc)
+                else:
+                    msg = "Only time conversion is supported in this version."
+                    raise common.UnsupportedValueConversionType(msg)
+
+                converted_values_data = []
+                for row in array_id_data_converted_values_all:
+                    converted_values = OrderedDict()
+                    for conv_name, conv_value in row.items():
+                        if conv_name == column_name:
+                            converted_values[column_name] = conv_value
+                    converted_values_data.append(converted_values)
+                array_id_data_with_column_names = [
+                    row for row in common.update_column_values_generator(
+                        data_old=array_id_data_with_column_names,
+                        data_new=converted_values_data)
+                    ]
 
         array_id_data_time_converted = cr10xparser.convert_time(
             data=array_id_data_with_column_names,
@@ -95,7 +133,7 @@ def process_location(cfg, output_dir, site, location, location_info, track=False
         )
 
         if mismatches:
-            cr10xparser.export_to_csv(data=mismatches, outfile_path=array_id_mismaches_file_path)
+            cr10xparser.export_to_csv(data=mismatches, outfile_path=array_id_mismatches_file_path)
 
     if track:
         if num_of_new_rows > 0:

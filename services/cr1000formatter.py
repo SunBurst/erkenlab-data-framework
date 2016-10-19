@@ -12,7 +12,7 @@ from collections import OrderedDict
 
 from campbellsciparser import devices
 
-from services import utils
+from services import common, utils
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 CONFIG_PATH = os.path.join(BASE_DIR, 'cfg/cr1000formatter.yaml')
@@ -37,6 +37,7 @@ def process_file(cfg, output_dir, site, location, file, file_info, track=False):
     header_row = int(file_info.get('header_row', 0))
     export_columns = file_info.get('export_columns')
     name = file_info.get('name', file)
+    convert_column_values = file_info.get('convert_column_values')
     file_path = file_info.get('file_path')
     line_num = file_info.get('line_num', 0)
     time_columns = file_info.get('time_columns')
@@ -62,6 +63,35 @@ def process_file(cfg, output_dir, site, location, file, file_info, track=False):
     num_of_new_rows += len(data)
 
     print("Found {0} new rows".format(num_of_new_rows))
+    if convert_column_values:
+        data_converted_values = data
+        for column_name, convert_column_info in convert_column_values.items():
+            value_type = convert_column_info.get('value_type')
+
+            if value_type == 'time':
+                value_time_columns = convert_column_info.get('value_time_columns')
+                data_converted_values = cr1000parser.convert_time(
+                    data=data_converted_values,
+                    time_parsed_column=column_name,
+                    time_columns=value_time_columns,
+                    replace_time_column=column_name,
+                    to_utc=to_utc)
+            else:
+                msg = "Only time conversion is supported in this version."
+                raise common.UnsupportedValueConversionType(msg)
+
+            converted_values_data = []
+            for row in data_converted_values:
+                converted_values = OrderedDict()
+                for conv_name, conv_value in row.items():
+                    if conv_name == column_name:
+                        converted_values[column_name] = conv_value
+                converted_values_data.append(converted_values)
+            data = [
+                row for row in common.update_column_values_generator(
+                    data_old=data_converted_values,
+                    data_new=converted_values_data)
+                ]
 
     data_to_export = []
     for row in data:
@@ -131,7 +161,16 @@ def process_files(args):
                     args.file,
                     file_info,
                     track=False)
-
+            else:
+                for file, file_info in files.items():
+                    cfg = process_file(
+                        cfg,
+                        output_dir,
+                        args.site,
+                        args.location,
+                        file,
+                        file_info,
+                        track=False)
         else:
             for location, location_info in locations.items():
                 files = location_info.get('files')
