@@ -4,6 +4,10 @@
 """Shared exceptions and functions. """
 
 
+class NoHeadersException(ValueError):
+    pass
+
+
 class UnsupportedValueConversionType(ValueError):
     pass
 

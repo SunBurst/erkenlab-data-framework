@@ -34,7 +34,8 @@ def process_file(cfg, output_dir, site, location, file, file_info, track=False):
         Updated configuration file.
 
     """
-    header_row = int(file_info.get('header_row', 0))
+    header_row = file_info.get('header_row')
+    headers = file_info.get('headers')
     export_columns = file_info.get('export_columns')
     name = file_info.get('name', file)
     convert_column_values = file_info.get('convert_column_values')
@@ -49,15 +50,30 @@ def process_file(cfg, output_dir, site, location, file, file_info, track=False):
     file_ext = os.path.splitext(os.path.abspath(file_path))[1]  # Get file extension
 
     cr1000parser = devices.CR1000Parser(time_zone)
-    data = cr1000parser.read_data(
-        infile_path=file_path,
-        header_row=header_row,
-        line_num=line_num,
-        convert_time=True,
-        time_parsed_column=time_parsed_column_name,
-        time_columns=time_columns,
-        to_utc=to_utc
-    )
+
+    if headers:
+        data = cr1000parser.read_data(
+            infile_path=file_path,
+            headers=headers,
+            line_num=line_num,
+            convert_time=True,
+            time_parsed_column=time_parsed_column_name,
+            time_columns=time_columns,
+            to_utc=to_utc
+        )
+    elif header_row:
+        header_row = int(header_row)
+        data = cr1000parser.read_data(
+            infile_path=file_path,
+            header_row=header_row,
+            line_num=line_num,
+            convert_time=True,
+            time_parsed_column=time_parsed_column_name,
+            time_columns=time_columns,
+            to_utc=to_utc
+        )
+    else:
+        raise common.NoHeadersException("Headers representation not found!")
 
     num_of_new_rows = 0
     num_of_new_rows += len(data)
