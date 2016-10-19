@@ -55,7 +55,6 @@ def process_log(cfg, output_dir, site, location, log, log_info):
     file_path = log_info.get('file_path')
     line_num = log_info.get('line_num')
     header_row = log_info.get('header_row')
-    include_time_zone = log_info.get('include_time_zone')
 
     file_ext = os.path.splitext(os.path.abspath(file_path))[1]  # Get file extension
     msg = "Processing site: {site}, location: {location}, log: {log}, file {file}"
@@ -66,7 +65,7 @@ def process_log(cfg, output_dir, site, location, log, log_info):
     data = baseparser.read_data(
         infile_path=file_path,
         header_row=header_row,
-        line_num=line_num
+        line_num=line_num,
     )
 
     if len(data) > 0:
@@ -80,8 +79,7 @@ def process_log(cfg, output_dir, site, location, log, log_info):
         baseparser.export_to_csv(
             data=data,
             outfile_path=output_file_path,
-            export_headers=True,
-            include_time_zone=include_time_zone
+            export_headers=True
         )
 
         num_of_processed_rows = len(data)
