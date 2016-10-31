@@ -2,8 +2,11 @@
 services/__pycache__
 tests/__pycache__
 
-# Config files
-cfg/*.yaml
+# App config files
+cfg/cr10xformatter.yaml
+cfg/cr1000formatter.yaml
+cfg/ftpsettings.yaml
+cfg/ftpuploader.yaml
 
 # Dist files
 build
