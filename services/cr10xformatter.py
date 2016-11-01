@@ -403,7 +403,7 @@ def process_location(cfg, output_dir, site, location, location_info, track=False
     process_array_ids(
         site=site,
         location=location,
-        array_ids_data=data,
+        data=data,
         time_zone=time_zone,
         time_format_args_library=time_format_args_library,
         output_dir=output_dir,
