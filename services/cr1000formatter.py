@@ -8,6 +8,9 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+import logging.config
+import time
+
 from collections import OrderedDict
 
 from campbellsciparser import devices
@@ -15,7 +18,12 @@ from campbellsciparser import devices
 from services import common, utils
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-CONFIG_PATH = os.path.join(BASE_DIR, 'cfg/cr1000formatter.yaml')
+APP_CONFIG_PATH = os.path.join(BASE_DIR, 'cfg/cr1000formatter.yaml')
+LOGGING_CONFIG_PATH = os.path.join(BASE_DIR, 'cfg/logging.yaml')
+
+logging_conf = utils.load_config(LOGGING_CONFIG_PATH)
+logging.config.dictConfig(logging_conf)
+logger = logging.getLogger('cr1000formatter')
 
 
 def process_file(cfg, output_dir, site, location, file, file_info, track=False):
@@ -38,7 +46,7 @@ def process_file(cfg, output_dir, site, location, file, file_info, track=False):
     headers = file_info.get('headers')
     export_columns = file_info.get('export_columns')
     name = file_info.get('name', file)
-    convert_column_values = file_info.get('convert_column_values')
+    convert_column_values = file_info.get('convert_data_column_values')
     file_path = file_info.get('file_path')
     line_num = file_info.get('line_num', 0)
     time_columns = file_info.get('time_columns')
@@ -133,23 +141,19 @@ def process_file(cfg, output_dir, site, location, file, file_info, track=False):
     return cfg
 
 
-def process_files(args):
+def process_sites(cfg, args):
     """Unpacks data from the configuration file, calls the core function and updates
         line number information if tracking is enabled.
 
-    Args
-    ----
-    args (Namespace): Arguments passed by the user. Includes site, location, file and
+    Parameters
+    ----------
+    cfg : dict
+        Program's configuration file.
+    args : Namespace
+        Arguments passed by the user. Includes site, location, table-based file and
         tracking information.
 
     """
-    cfg = utils.load_config(CONFIG_PATH)
-
-    system_is_active = cfg['settings']['active']
-    if not system_is_active:
-        print("System not active.")
-        return
-
     try:
         output_dir = cfg['settings']['data_output_dir']
     except KeyError:
@@ -157,80 +161,124 @@ def process_files(args):
         msg = "No output directory set! "
         msg += "Files will be output to the user's default directory at {output_dir}"
         msg = msg.format(output_dir=output_dir)
-        print(msg)
+        logger.info(msg)
 
+    logger.debug("Output directory: {dir}".format(dir=output_dir))
+    logger.debug("Getting configured sites.")
     sites = cfg['sites']
+    configured_sites_msg = ', '.join("{site}".format(site=site) for site in sites)
+    logger.debug("Configured sites: {sites}.".format(sites=configured_sites_msg))
+
+    if args.track:
+        logger.info("Tracking is enabled.")
+    else:
+        logger.info("Tracking is disabled.")
 
     if args.site:
-        site_info = sites.get(args.site)
-        locations = site_info.get('locations')
+        logger.info("Processing site: {site}".format(site=args.site))
+        site_info = sites[args.site]
+        logger.debug("Getting configured locations.")
+        locations = site_info['locations']
+        configured_locations_msg = ', '.join("{location}".format(
+            location=location) for location in locations)
+        logger.debug("Configured locations: {locations}.".format(
+            locations=configured_locations_msg))
         if args.location:
-            location_info = locations.get(args.location)
-            files = location_info.get('files')
+            location_info = locations[args.location]
+            logger.debug("Getting configured files.")
+            files = location_info['files']
+            configured_files_msg = ', '.join("{file}".format(
+                file=file) for file in files)
+            logger.debug("Configured files: {files}.".format(
+                files=configured_files_msg))
             if args.file:
-                file_info = files.get(args.file)
+                file_info = files[args.file]
                 cfg = process_file(
-                    cfg,
-                    output_dir,
-                    args.site,
-                    args.location,
-                    args.file,
-                    file_info,
+                    cfg=cfg,
+                    output_dir=output_dir,
+                    site=args.site,
+                    location=args.location,
+                    file=args.file,
+                    file_info=file_info,
                     track=False)
             else:
                 for file, file_info in files.items():
                     cfg = process_file(
-                        cfg,
-                        output_dir,
-                        args.site,
-                        args.location,
-                        file,
-                        file_info,
-                        track=False)
-        else:
-            for location, location_info in locations.items():
-                files = location_info.get('files')
-                for file, file_info in files.items():
-                    cfg = process_file(
-                        cfg,
-                        output_dir,
-                        args.site,
-                        location,
-                        file,
-                        file_info,
-                        track=False)
-    else:
-        for site, site_info in sites.items():
-            locations = site_info.get('locations')
-            for location, location_info in locations.items():
-                files = location_info.get('files')
-                for file, file_info in files.items():
-                    cfg = process_file(
-                        cfg,
-                        output_dir,
-                        site,
-                        location,
-                        file,
-                        file_info,
+                        cfg=cfg,
+                        output_dir=output_dir,
+                        site=args.site,
+                        location=args.location,
+                        file=file,
+                        file_info=file_info,
                         track=False)
 
+            logger.info("Done processing location: {location}".format(location=args.location))
+        else:
+            for location, location_info in locations.items():
+                files = location_info['files']
+                configured_files_msg = ', '.join("{file}".format(
+                    file=file) for file in files)
+                logger.debug("Configured files: {files}.".format(
+                    files=configured_files_msg))
+                for file, file_info in files.items():
+                    cfg = process_file(
+                        cfg=cfg,
+                        output_dir=output_dir,
+                        site=args.site,
+                        location=location,
+                        file=file,
+                        file_info=file_info,
+                        track=False)
+
+                logger.info(
+                    "Done processing location: {location}".format(location=location))
+
+        logger.info("Done processing site: {site}".format(site=args.site))
+    else:
+        for site, site_info in sites.items():
+            logger.info("Processing site: {site}".format(site=site))
+            locations = site_info['locations']
+            configured_locations_msg = ', '.join("{location}".format(
+                location=location) for location in locations)
+            logger.debug("Configured locations: {locations}.".format(
+                locations=configured_locations_msg))
+            for location, location_info in locations.items():
+                files = location_info['files']
+                configured_files_msg = ', '.join("{file}".format(
+                    file=file) for file in files)
+                logger.debug("Configured files: {files}.".format(
+                    files=configured_files_msg))
+                for file, file_info in files.items():
+                    cfg = process_file(
+                        cfg=cfg,
+                        output_dir=output_dir,
+                        site=site,
+                        location=location,
+                        file=file,
+                        file_info=file_info,
+                        track=False)
+
+                logger.info("Done processing location: {location}".format(location=location))
+
+            logger.info("Done processing site: {site}".format(site=site))
+
     if args.track:
-        print("Updating config file.")
-        utils.save_config(CONFIG_PATH, cfg)
+        logger.info("Updating config file.")
+        utils.save_config(APP_CONFIG_PATH, cfg)
 
 
 def main():
     """Parses and validates arguments from the command line. """
     parser = argparse.ArgumentParser(
-        prog='CR1000 Exporter',
-        description='Program for exporting Campbell CR1000 datalogger files.'
+        prog='CR1000Formatter',
+        description='Program for formatting and exporting Campbell CR1000 mixed array datalogger files.'
     )
     parser.add_argument('-s', '--site', action='store', dest='site',
-                        help='Site to split.')
+                        help='Site to process.')
     parser.add_argument('-l', '--location', action='store', dest='location',
-                        help='Location to split.')
+                        help='Location to process.')
     parser.add_argument('-f', '--file', action='store', dest='file',
-                        help='File to split.')
+                        help='Table-based file to process.')
     parser.add_argument(
         '-t', '--track',
         help='Track file line number.',
@@ -241,13 +289,36 @@ def main():
 
     args = parser.parse_args()
 
+    logger.debug("Arguments passed by user")
+    args_msg = ', '.join("{arg}: {value}".format(
+        arg=arg, value=value) for (arg, value) in vars(args).items())
+
+    logger.debug(args_msg)
+
+    app_cfg = utils.load_config(APP_CONFIG_PATH)
+
     if args.file:
         if not args.location and not args.site:
             parser.error("--site and --location are required.")
     if args.location and not args.site:
         parser.error("--site is required.")
 
-    process_files(args)
+    system_is_active = app_cfg['settings']['active']
+    if not system_is_active:
+        logger.info("System is not active.")
+        return
+
+    logger.info("System is active")
+    logger.info("Initializing")
+
+    start = time.time()
+    process_sites(app_cfg, args)
+    stop = time.time()
+    elapsed = (stop - start)
+
+    logger.info("Finished job in {elapsed} seconds".format(elapsed=elapsed))
+
 
 if __name__ == '__main__':
     main()
+    logger.info("Exiting.")

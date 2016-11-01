@@ -1,0 +1,15 @@
+# Cache files
+services/__pycache__
+tests/__pycache__
+
+# Config files
+
+cfg/cr10xformatter.yaml
+
+# Dist files
+build
+dist
+ErkenLab_Data_Framework.egg-info
+
+# PyCharm files
+.idea

@@ -1,18 +1,26 @@
 version: 1
 formatters:
-  simple:
-    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    simple:
+        format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        datefmt: '%Y/%m/%d %H:%M:%S'
 handlers:
-  console:
-    class: logging.StreamHandler
-    level: DEBUG
-    formatter: simple
-    stream: ext://sys.stdout
+    console:
+        class: logging.StreamHandler
+        formatter: simple
+        level: DEBUG
+        stream: ext://sys.stdout
+    file:
+        class : logging.FileHandler
+        formatter: simple
+        level: DEBUG
+        filename: '/home/marcus/data/CR10XFormatter Output/log.log'
 loggers:
-  simpleExample:
-    level: DEBUG
-    handlers: [console]
-    propagate: no
+    cr10xformatter:
+        level: DEBUG
+        handlers: [console, file]
+    cr1000formatter:
+        level: DEBUG
+        handlers: [console, file]
 root:
-  level: DEBUG
-  handlers: [console]
+    handlers: [console]
+    level: NOTSET
