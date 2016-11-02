@@ -9,18 +9,23 @@ handlers:
         formatter: simple
         level: DEBUG
         stream: ext://sys.stdout
-    file:
+    file_loggerfilesformatter:
         class : logging.FileHandler
         formatter: simple
         level: DEBUG
-        filename: '/home/marcus/data/CR10XFormatter Output/log.log'
+        filename: '/home/marcus/data/ErkenLab-Data-Framework/loggerfilesformatter.log'
+    file_ftpuploader:
+        class : logging.FileHandler
+        formatter: simple
+        level: DEBUG
+        filename: '/home/marcus/data/ErkenLab-Data-Framework/ftpuploader.log'
 loggers:
-    cr10xformatter:
+    ftpuploader:
         level: DEBUG
-        handlers: [console, file]
-    cr1000formatter:
+        handlers: [console, file_ftpuploader]
+    loggerfilesformatter:
         level: DEBUG
-        handlers: [console, file]
+        handlers: [console, file_loggerfilesformatter]
 root:
     handlers: [console]
     level: NOTSET
