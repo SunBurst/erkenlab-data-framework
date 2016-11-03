@@ -7,7 +7,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import argparse
 import ftplib
 import logging.config
-import ntpath
 import time
 
 from campbellsciparser import cr
@@ -51,16 +50,7 @@ def cd_tree(current_dir):
             session.cwd(current_dir)
 
 
-def transfer_file(file_path):
-    try:
-        file_name = ntpath.split(file_path)[1]
-        with open(file_path, 'rb') as f:     # File to send.
-            session.storbinary('STOR ' + file_name, f)    # Send the file.
-    except IndexError as e:
-        print(e)
-
-
-def process_file(cfg, output_dir, site, location, file, file_info):
+def transfer_rows(cfg, output_dir, site, location, file, file_info):
     name = file_info.get('name', file)
     file_path = file_info.get('file_path')
     line_num = file_info.get('line_num')
@@ -82,7 +72,6 @@ def process_file(cfg, output_dir, site, location, file, file_info):
 
     if num_of_new_rows == 0:
         logger.info("No work to be done for table: {table}".format(table=name))
-        return None
     else:
         file_name = name + file_ext
         output_file_path = os.path.join(
@@ -90,16 +79,28 @@ def process_file(cfg, output_dir, site, location, file, file_info):
 
         os.makedirs(os.path.dirname(output_file_path), exist_ok=True)
 
-        cr.export_to_csv(
-            data=data,
-            outfile_path=output_file_path,
-            export_header=True
-        )
+        if file_name not in session.nlst():
+            cr.export_to_csv(
+                data=data,
+                outfile_path=output_file_path,
+                export_header=True
+            )
+            with open(output_file_path, 'rb') as f:  # File to send.
+                session.storbinary('STOR ' + file_name, f)  # Send the file.
+        else:
+            cr.export_to_csv(
+                data=data,
+                outfile_path=output_file_path,
+                export_header=False
+            )
+            with open(output_file_path, 'rb') as f:  # File to send.
+                session.storbinary('APPE ' + file_name, f)  # Send the file.
 
+
+        os.remove(output_file_path)
         new_line_num = line_num + num_of_new_rows
-        cfg['sites'][site]['locations'][location]['files'][file]['line_num'] = new_line_num
-
-        return output_file_path
+        cfg['sites'][site]['locations'][location]['files'][file][
+            'line_num'] = new_line_num
 
 
 def process_sites(cfg, args):
@@ -124,6 +125,7 @@ def process_sites(cfg, args):
         logger.info(msg)
 
     logger.debug("Output directory: {dir}".format(dir=output_dir))
+
     logger.debug("Getting configured sites.")
 
     sites = cfg['sites']
@@ -161,29 +163,25 @@ def process_sites(cfg, args):
                     # Process specific file
                     file_info = files[args.file]
                     cd_tree(args.file)
-                    outfile_path = process_file(
+                    transfer_rows(
                         cfg,
                         output_dir,
                         args.site,
                         args.location,
                         args.file,
                         file_info)
-                    if outfile_path:
-                        transfer_file(outfile_path)
                 else:
                     # Process all files
                     for file, file_info in files.items():
                         cd_tree(location_dir)
                         cd_tree(file)
-                        outfile_path = process_file(
+                        transfer_rows(
                             cfg,
                             output_dir,
                             args.site,
                             args.location,
                             file,
                             file_info)
-                        if outfile_path:
-                            transfer_file(outfile_path)
             else:
                 # Process all locations
                 for location, location_info in locations.items():
@@ -194,15 +192,13 @@ def process_sites(cfg, args):
                     for file, file_info in files.items():
                         cd_tree(location_dir)
                         cd_tree(file)
-                        outfile_path = process_file(
+                        transfer_rows(
                             cfg,
                             output_dir,
                             args.site,
                             location,
                             file,
                             file_info)
-                        if outfile_path:
-                            transfer_file(outfile_path)
         else:
             # Process all sites
             for site, site_info in sites.items():
@@ -218,15 +214,13 @@ def process_sites(cfg, args):
                     for file, file_info in files.items():
                         cd_tree(location_dir)
                         cd_tree(file)
-                        outfile_path = process_file(
+                        transfer_rows(
                             cfg,
                             output_dir,
                             site,
                             location,
                             file,
                             file_info)
-                        if outfile_path:
-                            transfer_file(outfile_path)
     except Exception as e:
         print(e)
     else:
