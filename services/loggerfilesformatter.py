@@ -21,7 +21,8 @@ LOGGING_CONFIG_PATH = os.path.join(BASE_DIR, 'cfg/logging.yaml')
 
 logging_conf = utils.load_config(LOGGING_CONFIG_PATH)
 logging.config.dictConfig(logging_conf)
-logger = logging.getLogger('loggerfilesformatter')
+logger_info = logging.getLogger('loggerfilesformatter_info')
+logger_debug = logging.getLogger('loggerfilesformatter_debug')
 
 
 class NoHeadersException(ValueError):
@@ -266,59 +267,59 @@ def process_array_ids(site, location, datalogger, data, time_zone, time_format_a
     for array_id, array_id_info in array_ids_info.items():
         array_name = array_id_info.get('name', array_id)
 
-        logger.info("Processing array: {array_name}".format(array_name=array_name))
+        logger_info.info("Processing array: {array_name}".format(array_name=array_name))
         array_id_data = data.get(array_name)
-        logger.info("{num} new rows".format(num=len(array_id_data)))
+        logger_info.info("{num} new rows".format(num=len(array_id_data)))
 
         if not array_id_data:
-            logger.info("No work to be done for array: {array_name}".format(array_name=array_name))
+            logger_info.info("No work to be done for array: {array_name}".format(array_name=array_name))
             continue
 
         column_names = array_id_info.get('column_names')
-        logger.debug("Column names : {column_names}".format(column_names=column_names))
+        logger_debug.debug("Column names : {column_names}".format(column_names=column_names))
 
         export_columns = array_id_info.get('export_columns')
-        logger.debug(
+        logger_debug.debug(
             "Export columns: {export_columns}".format(export_columns=export_columns))
 
         include_time_zone = array_id_info.get('include_time_zone', False)
-        logger.debug("Include time zone: {include_time_zone}".format(
+        logger_debug.debug("Include time zone: {include_time_zone}".format(
             include_time_zone=include_time_zone))
 
         time_columns = array_id_info.get('time_columns')
-        logger.debug("Time columns: {time_columns}".format(time_columns=time_columns))
+        logger_debug.debug("Time columns: {time_columns}".format(time_columns=time_columns))
 
         time_parsed_column_name = array_id_info.get('time_parsed_column_name', 'Timestamp')
-        logger.debug("Time parsed column {time_parsed_column_name}".format(
+        logger_debug.debug("Time parsed column {time_parsed_column_name}".format(
             time_parsed_column_name=time_parsed_column_name))
 
         to_utc = array_id_info.get('to_utc', False)
-        logger.debug("To UTC {to_utc}".format(to_utc=to_utc))
+        logger_debug.debug("To UTC {to_utc}".format(to_utc=to_utc))
 
         column_values_to_convert = array_id_info.get('convert_data_column_values')
-        logger.debug("Convert column_values: {column_values_to_convert}".format(
+        logger_debug.debug("Convert column_values: {column_values_to_convert}".format(
             column_values_to_convert=column_values_to_convert))
 
         array_id_file = array_name + file_ext
-        logger.debug("Array id file: {array_id_file}".format(
+        logger_debug.debug("Array id file: {array_id_file}".format(
             array_id_file=array_id_file))
 
         array_id_file_path = os.path.join(
             os.path.abspath(output_dir), site, location, datalogger, array_id_file)
-        logger.debug("Array id file path: {array_id_file_path}".format(
+        logger_debug.debug("Array id file path: {array_id_file_path}".format(
             array_id_file_path=array_id_file_path))
 
         array_id_mismatches_file = array_name + ' Mismatches' + file_ext
-        logger.debug("Array id mismatched file: {array_id_mismatches_file}".format(
+        logger_debug.debug("Array id mismatched file: {array_id_mismatches_file}".format(
             array_id_mismatches_file=array_id_mismatches_file))
 
         array_id_mismatches_file_path = os.path.join(
             os.path.abspath(output_dir), site, location, datalogger, array_id_mismatches_file)
-        logger.debug(
+        logger_debug.debug(
             "Array id mismatched file path: {array_id_mismatches_file_path}".format(
                 array_id_mismatches_file_path=array_id_mismatches_file_path))
 
-        logger.info("Assigning column names")
+        logger_info.info("Assigning column names")
 
         array_id_data_with_column_names, mismatches = cr.update_column_names(
             data=array_id_data,
@@ -326,9 +327,9 @@ def process_array_ids(site, location, datalogger, data, time_zone, time_format_a
             match_row_lengths=True,
             get_mismatched_row_lengths=True)
 
-        logger.info("Number of matched row lengths: {matched}".format(
+        logger_info.info("Number of matched row lengths: {matched}".format(
             matched=len(array_id_data_with_column_names)))
-        logger.info("Number of mismatched row lengths: {mismatched}".format(
+        logger_info.info("Number of mismatched row lengths: {mismatched}".format(
             mismatched=len(mismatches)))
 
         if column_values_to_convert:
@@ -388,20 +389,20 @@ def process_mixed_array(cfg, output_dir, site, location, datalogger, datalogger_
 
     """
     array_ids_info = datalogger_info.get('array_ids', {})
-    logger.debug(
+    logger_debug.debug(
         "Array ids info: {array_ids_info}".format(array_ids_info=array_ids_info))
 
     file_path = datalogger_info.get('file_path')
-    logger.debug("File path: {file_path}".format(file_path=file_path))
+    logger_debug.debug("File path: {file_path}".format(file_path=file_path))
 
     line_num = datalogger_info.get('line_num', 0)
-    logger.debug("Line num: {line_num}".format(line_num=line_num))
+    logger_debug.debug("Line num: {line_num}".format(line_num=line_num))
 
     time_zone = datalogger_info.get('time_zone')
-    logger.debug("Time zone: {time_zone}".format(time_zone=time_zone))
+    logger_debug.debug("Time zone: {time_zone}".format(time_zone=time_zone))
 
     time_format_args_library = datalogger_info.get('time_format_args_library')
-    logger.debug("Time format args library: {time_format_args_library}".format(
+    logger_debug.debug("Time format args library: {time_format_args_library}".format(
         time_format_args_library=time_format_args_library))
 
     array_id_names = {
@@ -421,13 +422,13 @@ def process_mixed_array(cfg, output_dir, site, location, datalogger, datalogger_
     for array_id, array_id_data in data.items():
         num_of_new_rows += len(array_id_data)
 
-    logger.info("Found {num} new rows".format(num=num_of_new_rows))
+    logger_info.info("Found {num} new rows".format(num=num_of_new_rows))
     if num_of_new_rows == 0:
-        logger.info("No work to be done for location: {location}".format(location=location))
+        logger_info.info("No work to be done for location: {location}".format(location=location))
         return cfg
 
     file_ext = os.path.splitext(os.path.abspath(file_path))[1]  # Get file extension
-    logger.debug("File ext: {file_ext}".format(file_ext=file_ext))
+    logger_debug.debug("File ext: {file_ext}".format(file_ext=file_ext))
 
     process_array_ids(
         site=site,
@@ -444,11 +445,11 @@ def process_mixed_array(cfg, output_dir, site, location, datalogger, datalogger_
     if track:
         if num_of_new_rows > 0:
             new_line_num = line_num + num_of_new_rows
-            logger.info("Updated up to line number {num}".format(num=new_line_num))
+            logger_info.info("Updated up to line number {num}".format(num=new_line_num))
             cfg['sites'][site]['locations'][location]['dataloggers'][datalogger]['line_num'] = new_line_num
 
     msg = "Done processing datalogger: {datalogger}"
-    logger.info(msg.format(datalogger=datalogger))
+    logger_info.info(msg.format(datalogger=datalogger))
 
     return cfg
 
@@ -479,49 +480,49 @@ def process_table_based(cfg, output_dir, site, location, datalogger, table, tabl
 
     """
     header_row = table_info.get('header_row')
-    logger.debug("Header row: {header_row}".format(header_row=header_row))
+    logger_debug.debug("Header row: {header_row}".format(header_row=header_row))
 
     column_names = table_info.get('column_names')
-    logger.debug("Column names: {column_names}".format(column_names=column_names))
+    logger_debug.debug("Column names: {column_names}".format(column_names=column_names))
 
     export_columns = table_info.get('export_columns')
-    logger.debug("Export columns: {export_columns}".format(export_columns=export_columns))
+    logger_debug.debug("Export columns: {export_columns}".format(export_columns=export_columns))
 
     name = table_info.get('name', table)
-    logger.debug("Name: {name}".format(name=name))
+    logger_debug.debug("Name: {name}".format(name=name))
 
     convert_column_values = table_info.get('convert_data_column_values')
-    logger.debug("Convert column values: {convert_column_values}".format(
+    logger_debug.debug("Convert column values: {convert_column_values}".format(
         convert_column_values=convert_column_values))
 
     file_path = table_info.get('file_path')
-    logger.debug("File path: {file_path}".format(file_path=file_path))
+    logger_debug.debug("File path: {file_path}".format(file_path=file_path))
 
     line_num = table_info.get('line_num', 0)
-    logger.debug("Line num: {line_num}".format(line_num=line_num))
+    logger_debug.debug("Line num: {line_num}".format(line_num=line_num))
 
     time_columns = table_info.get('time_columns')
-    logger.debug("Time columns: {time_columns}".format(time_columns=time_columns))
+    logger_debug.debug("Time columns: {time_columns}".format(time_columns=time_columns))
 
     time_format_args_library = table_info.get('time_format_args_library')
-    logger.debug("Time format args library: {time_format_args_library}".format(
+    logger_debug.debug("Time format args library: {time_format_args_library}".format(
         time_format_args_library=time_format_args_library))
 
     time_parsed_column_name = table_info.get('time_parsed_column_name')
-    logger.debug("Time parsed column name: {time_parsed_column_name}".format(
+    logger_debug.debug("Time parsed column name: {time_parsed_column_name}".format(
         time_parsed_column_name=time_parsed_column_name))
 
     time_zone = table_info.get('time_zone')
-    logger.debug("Time zone: {time_zone}".format(time_zone=time_zone))
+    logger_debug.debug("Time zone: {time_zone}".format(time_zone=time_zone))
 
     to_utc = table_info.get('to_utc', False)
-    logger.debug("To UTC: {to_utc}".format(to_utc=to_utc))
+    logger_debug.debug("To UTC: {to_utc}".format(to_utc=to_utc))
 
     include_time_zone = table_info.get('include_time_zone', False)
-    logger.debug("Include time zone: {include_time_zone}".format(include_time_zone=include_time_zone))
+    logger_debug.debug("Include time zone: {include_time_zone}".format(include_time_zone=include_time_zone))
 
     file_ext = os.path.splitext(os.path.abspath(file_path))[1]  # Get file extension
-    logger.debug("File ext: {file_ext}".format(file_ext=file_ext))
+    logger_debug.debug("File ext: {file_ext}".format(file_ext=file_ext))
 
     if column_names:
         data = cr.read_table_data(
@@ -554,9 +555,9 @@ def process_table_based(cfg, output_dir, site, location, datalogger, table, tabl
     num_of_new_rows = 0
     num_of_new_rows += len(data)
 
-    logger.info("Found {num} new rows".format(num=num_of_new_rows))
+    logger_info.info("Found {num} new rows".format(num=num_of_new_rows))
     if num_of_new_rows == 0:
-        logger.info("No work to be done for table: {table}".format(table=name))
+        logger_info.info("No work to be done for table: {table}".format(table=name))
         return cfg
 
     if convert_column_values:
@@ -585,10 +586,10 @@ def process_table_based(cfg, output_dir, site, location, datalogger, table, tabl
     if track:
         if num_of_new_rows > 0:
             new_line_num = line_num + num_of_new_rows
-            logger.info("Updated up to line number {num}".format(num=new_line_num))
+            logger_info.info("Updated up to line number {num}".format(num=new_line_num))
             cfg['sites'][site]['locations'][location]['dataloggers'][datalogger]['tables'][table]['line_num'] = new_line_num
 
-    logger.info("Done processing table {table}".format(table=table))
+    logger_info.info("Done processing table {table}".format(table=table))
 
     return cfg
 
@@ -612,47 +613,47 @@ def process_sites(cfg, args):
         msg = "No output directory set! "
         msg += "Files will be output to the user's default directory at {output_dir}"
         msg = msg.format(output_dir=output_dir)
-        logger.info(msg)
+        logger_info.info(msg)
 
-    logger.debug("Output directory: {dir}".format(dir=output_dir))
-    logger.debug("Getting configured sites.")
+    logger_debug.debug("Output directory: {dir}".format(dir=output_dir))
+    logger_debug.debug("Getting configured sites.")
 
     sites = cfg['sites']
 
     configured_sites_msg = ', '.join("{site}".format(site=site) for site in sites)
-    logger.debug("Configured sites: {sites}.".format(sites=configured_sites_msg))
+    logger_debug.debug("Configured sites: {sites}.".format(sites=configured_sites_msg))
 
     if args.track:
-        logger.info("Tracking is enabled.")
+        logger_info.info("Tracking is enabled.")
     else:
-        logger.info("Tracking is disabled.")
+        logger_info.info("Tracking is disabled.")
 
     if args.site:
         # Process specific site
-        logger.info("Processing site: {site}".format(site=args.site))
+        logger_info.info("Processing site: {site}".format(site=args.site))
         site_info = sites[args.site]
-        logger.debug("Getting configured locations.")
+        logger_debug.debug("Getting configured locations.")
         locations = site_info['locations']
         configured_locations_msg = ', '.join("{location}".format(
             location=location) for location in locations)
-        logger.debug("Configured locations: {locations}.".format(
+        logger_debug.debug("Configured locations: {locations}.".format(
             locations=configured_locations_msg))
         if args.location:
             # Process specific location
-            logger.info("Processing location: {location}".format(location=args.location))
+            logger_info.info("Processing location: {location}".format(location=args.location))
             location_info = locations[args.location]
-            logger.debug("Getting location configuration.")
+            logger_debug.debug("Getting location configuration.")
             dataloggers = location_info['dataloggers']
             configured_dataloggers_msg = ', '.join("{datalogger}".format(
                 datalogger=datalogger) for datalogger in dataloggers)
-            logger.debug("Configured dataloggers: {dataloggers}.".format(
+            logger_debug.debug("Configured dataloggers: {dataloggers}.".format(
                 dataloggers=configured_dataloggers_msg))
             if args.datalogger:
                 # Process specific datalogger
-                logger.info(
+                logger_info.info(
                     "Processing datalogger: {datalogger}".format(datalogger=args.datalogger))
                 datalogger_info = dataloggers[args.datalogger]
-                logger.debug("Getting datalogger memory structure.")
+                logger_debug.debug("Getting datalogger memory structure.")
                 memory_structure = datalogger_info['memory_structure']
                 if memory_structure == 'mixed array':
                     cfg = process_mixed_array(
@@ -662,7 +663,7 @@ def process_sites(cfg, args):
                     tables = datalogger_info['tables']
                     configured_tables_msg = ', '.join("{table}".format(
                         table=table) for table in tables)
-                    logger.debug("Configured tables: {tables}.".format(
+                    logger_debug.debug("Configured tables: {tables}.".format(
                         tables=configured_tables_msg))
                     if args.table:
                         # Process specific table based file
@@ -683,7 +684,7 @@ def process_sites(cfg, args):
             else:
                 # Process all dataloggers
                 for datalogger, datalogger_info in dataloggers.items():
-                    logger.info(
+                    logger_info.info(
                         "Processing datalogger: {datalogger}".format(
                             datalogger=datalogger))
                     memory_structure = datalogger_info['memory_structure']
@@ -695,7 +696,7 @@ def process_sites(cfg, args):
                         tables = datalogger_info['tables']
                         configured_tables_msg = ', '.join("{table}".format(
                             table=table) for table in tables)
-                        logger.debug("Configured tables: {tables}.".format(
+                        logger_debug.debug("Configured tables: {tables}.".format(
                             tables=configured_tables_msg))
                         # Process all table based files
                         for table, table_info in tables.items():
@@ -709,17 +710,17 @@ def process_sites(cfg, args):
         else:
             # Process all locations
             for location, location_info in locations.items():
-                logger.info(
+                logger_info.info(
                     "Processing location: {location}".format(location=location))
-                logger.debug("Getting location configuration.")
+                logger_debug.debug("Getting location configuration.")
                 dataloggers = location_info['dataloggers']
                 configured_dataloggers_msg = ', '.join("{datalogger}".format(
                     datalogger=datalogger) for datalogger in dataloggers)
-                logger.debug("Configured dataloggers: {dataloggers}.".format(
+                logger_debug.debug("Configured dataloggers: {dataloggers}.".format(
                     dataloggers=configured_dataloggers_msg))
                 # Process all dataloggers
                 for datalogger, datalogger_info in dataloggers.items():
-                    logger.info(
+                    logger_info.info(
                         "Processing datalogger: {datalogger}".format(
                             datalogger=datalogger))
                     memory_structure = datalogger_info['memory_structure']
@@ -731,7 +732,7 @@ def process_sites(cfg, args):
                         tables = datalogger_info['tables']
                         configured_tables_msg = ', '.join("{table}".format(
                             table=table) for table in tables)
-                        logger.debug("Configured tables: {tables}.".format(
+                        logger_debug.debug("Configured tables: {tables}.".format(
                             tables=configured_tables_msg))
                         # Process all table based files
                         for table, table_info in tables.items():
@@ -743,29 +744,29 @@ def process_sites(cfg, args):
                         raise TypeError(
                             "Unsupported datalogger memory structure type!")
 
-        logger.info("Done processing site: {site}".format(site=args.site))
+        logger_info.info("Done processing site: {site}".format(site=args.site))
     else:
         # Process all sites
         for site, site_info in sites.items():
-            logger.info("Processing site: {site}".format(site=site))
+            logger_info.info("Processing site: {site}".format(site=site))
             locations = site_info['locations']
             configured_locations_msg = ', '.join("{location}".format(
                 location=location) for location in locations)
-            logger.debug("Configured locations: {locations}.".format(
+            logger_debug.debug("Configured locations: {locations}.".format(
                 locations=configured_locations_msg))
             # Process all locations
             for location, location_info in locations.items():
-                logger.info(
+                logger_info.info(
                     "Processing location: {location}".format(location=location))
-                logger.debug("Getting location configuration.")
+                logger_debug.debug("Getting location configuration.")
                 dataloggers = location_info['dataloggers']
                 configured_dataloggers_msg = ', '.join("{datalogger}".format(
                     datalogger=datalogger) for datalogger in dataloggers)
-                logger.debug("Configured dataloggers: {dataloggers}.".format(
+                logger_debug.debug("Configured dataloggers: {dataloggers}.".format(
                     dataloggers=configured_dataloggers_msg))
                 # Process all dataloggers
                 for datalogger, datalogger_info in dataloggers.items():
-                    logger.info(
+                    logger_info.info(
                         "Processing datalogger: {datalogger}".format(
                             datalogger=datalogger))
                     memory_structure = datalogger_info['memory_structure']
@@ -777,7 +778,7 @@ def process_sites(cfg, args):
                         tables = datalogger_info['tables']
                         configured_tables_msg = ', '.join("{table}".format(
                             table=table) for table in tables)
-                        logger.debug("Configured tables: {tables}.".format(
+                        logger_debug.debug("Configured tables: {tables}.".format(
                             tables=configured_tables_msg))
                         # Process all table based files
                         for table, table_info in tables.items():
@@ -789,10 +790,10 @@ def process_sites(cfg, args):
                         raise TypeError(
                             "Unsupported datalogger memory structure type!")
 
-            logger.info("Done processing site: {site}".format(site=args.site))
+            logger_info.info("Done processing site: {site}".format(site=args.site))
 
     if args.track:
-        logger.info("Updating config file.")
+        logger_info.info("Updating config file.")
         utils.save_config(APP_CONFIG_PATH, cfg)
 
 
@@ -819,37 +820,35 @@ def main():
     )
 
     args = parser.parse_args()
-    logger.debug("Arguments passed by user")
+
+    logger_debug.debug("Arguments passed by user")
     args_msg = ', '.join("{arg}: {value}".format(
         arg=arg, value=value) for (arg, value) in vars(args).items())
-
-    logger.debug(args_msg)
+    logger_debug.debug(args_msg)
 
     if args.location and not args.site:
-        parser.error("--site and --location is required.")
+        parser.error("--site is required.")
     if args.table:
-        if not args.location:
-            parser.error("--site and --location is required.")
-        if not args.site:
+        if not args.location or not args.site:
             parser.error("--site and --location is required.")
 
     app_cfg = utils.load_config(APP_CONFIG_PATH)
 
     system_is_active = app_cfg['settings']['active']
     if not system_is_active:
-        logger.info("System is not active.")
+        logger_info.info("System is not active.")
         return
 
-    logger.info("System is active")
-    logger.info("Initializing")
+    logger_info.info("System is active")
+    logger_info.info("Initializing")
 
     start = time.time()
     process_sites(app_cfg, args)
     stop = time.time()
-    elapsed = (stop - start)
+    elapsed_time = (stop - start)
 
-    logger.info("Finished job in {elapsed} seconds".format(elapsed=elapsed))
+    logger_info.info("Finished job in {elapsed_time} seconds".format(elapsed_time=elapsed_time))
 
 if __name__ == '__main__':
     main()
-    logger.info("Exiting.")
+    logger_info.info("Exiting.")

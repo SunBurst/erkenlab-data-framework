@@ -20,7 +20,8 @@ LOGGING_CONFIG_PATH = os.path.join(BASE_DIR, 'cfg/logging.yaml')
 
 logging_conf = utils.load_config(LOGGING_CONFIG_PATH)
 logging.config.dictConfig(logging_conf)
-logger = logging.getLogger('ftpuploader')
+logger_info = logging.getLogger('ftpuploader_info')
+logger_debug = logging.getLogger('ftpuploader_debug')
 
 ftp_cfg = utils.load_config(FTP_CONFIG_PATH)
 
@@ -68,10 +69,10 @@ def transfer_rows(cfg, output_dir, site, location, file, file_info):
     num_of_new_rows = 0
     num_of_new_rows += len(data)
 
-    logger.info("Found {num} new rows".format(num=num_of_new_rows))
+    logger_info.info("Found {num} new rows".format(num=num_of_new_rows))
 
     if num_of_new_rows == 0:
-        logger.info("No work to be done for table: {table}".format(table=name))
+        logger_info.info("No work to be done for table: {table}".format(table=name))
     else:
         file_name = name + file_ext
         output_file_path = os.path.join(
@@ -122,40 +123,40 @@ def process_sites(cfg, args):
         msg = "No output directory set! "
         msg += "Files will be output to the user's default directory at {output_dir}"
         msg = msg.format(output_dir=output_dir)
-        logger.info(msg)
+        logger_info.info(msg)
 
-    logger.debug("Output directory: {dir}".format(dir=output_dir))
+    logger_debug.debug("Output directory: {dir}".format(dir=output_dir))
 
-    logger.debug("Getting configured sites.")
+    logger_debug.debug("Getting configured sites.")
 
     sites = cfg['sites']
 
     configured_sites_msg = ', '.join("{site}".format(site=site) for site in sites)
-    logger.debug("Configured sites: {sites}.".format(sites=configured_sites_msg))
+    logger_debug.debug("Configured sites: {sites}.".format(sites=configured_sites_msg))
 
     root_dir = session.pwd()
 
     try:
         if args.site:
             # Process specific site
-            logger.info("Processing site: {site}".format(site=args.site))
+            logger_info.info("Processing site: {site}".format(site=args.site))
             site_info = sites[args.site]
-            logger.debug("Getting configured locations.")
+            logger_debug.debug("Getting configured locations.")
             locations = site_info['locations']
             configured_locations_msg = ', '.join("{location}".format(
                 location=location) for location in locations)
-            logger.debug("Configured locations: {locations}.".format(
+            logger_debug.debug("Configured locations: {locations}.".format(
                 locations=configured_locations_msg))
             cd_tree(args.site)
             site_dir = session.pwd()
             if args.location:
                 # Process specific location
-                logger.info("Processing location: {location}".format(location=args.location))
+                logger_info.info("Processing location: {location}".format(location=args.location))
                 location_info = locations[args.location]
                 files = location_info['files']
                 configured_files_msg = ', '.join("{file}".format(
                     file=file) for file in files)
-                logger.debug("Configured files: {files}.".format(
+                logger_debug.debug("Configured files: {files}.".format(
                     files=configured_files_msg))
                 cd_tree(args.location)
                 location_dir = session.pwd()
@@ -245,11 +246,11 @@ def setup_parser():
                         dest='file', help='Specific file to upload.')
 
     args = parser.parse_args()
-    logger.debug("Arguments passed by user")
+    logger_debug.debug("Arguments passed by user")
     args_msg = ', '.join("{arg}: {value}".format(
         arg=arg, value=value) for (arg, value) in vars(args).items())
 
-    logger.debug(args_msg)
+    logger_debug.debug(args_msg)
 
     if args.file:
         if not args.location and not args.site:
@@ -262,19 +263,19 @@ def setup_parser():
 
     system_is_active = app_cfg['settings']['active']
     if not system_is_active:
-        logger.info("System is not active.")
+        logger_info.info("System is not active.")
         return
 
-    logger.info("System is active")
-    logger.info("Initializing")
+    logger_info.info("System is active")
+    logger_info.info("Initializing")
 
     start = time.time()
     process_sites(app_cfg, args)
     stop = time.time()
     elapsed = (stop - start)
 
-    logger.info("Finished job in {elapsed} seconds".format(elapsed=elapsed))
+    logger_info.info("Finished job in {elapsed} seconds".format(elapsed=elapsed))
 
 if __name__ == '__main__':
     setup_parser()
-    logger.info("Exiting.")
+    logger_info.info("Exiting.")
